@@ -80,6 +80,10 @@ select {
 
 /* END CSS RESET */
 
+ul {
+  padding-left: 1.5rem;
+}
+
 @media print {
   @page {
     size: A5 portrait;

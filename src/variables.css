@@ -1,4 +1,7 @@
 :root {
   --recipe-card-height: 210mm;
   --recipe-card-width: 148mm;
+
+  --recipe-card-section-border: 5px solid black;
+  --recipe-card-section-border-radius: 60px/25px;
 }
