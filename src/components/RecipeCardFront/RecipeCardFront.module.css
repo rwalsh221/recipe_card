@@ -136,7 +136,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  /* padding: 5px; */
   /* background-color: hotpink; */
   border: var(--recipe-card-section-border);
   border-radius: var(--recipe-card-section-border-radius);

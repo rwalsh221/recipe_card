@@ -5,7 +5,7 @@ import recipeImg from '../../assets/img/white-chocolate-custard-tart.jpeg';
 const RecipeCardFront = () => {
   return (
     <>
-      <section className={classes.rc_front}>
+      {/* <section className={classes.rc_front}>
         <div className={classes.rc_front__heading}>
           <h2> White chocolate custard tart</h2>
         </div>
@@ -61,7 +61,7 @@ const RecipeCardFront = () => {
             </ul>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* BACK OF CARD */}
       <section>
         <div className={classes.rc_back}>
@@ -112,13 +112,13 @@ const RecipeCardFront = () => {
                 Pour custard into pastry case. Bake for 40 to 45 minutes or
                 until just set. Cool to room temperature. Refrigerate overnight.
               </li>
-              {/* <li>
+              <li>
                 <span>step 6</span>
                 <br />
                 Stand tart at room temperature for 10 minutes before serving.
                 Top with raspberries and grated white chocolate curls. Serve
                 with cream.
-              </li> */}
+              </li>
             </ul>
           </div>
           <div className={classes.rc_back__footer}>
