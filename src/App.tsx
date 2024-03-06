@@ -1,7 +1,6 @@
-import RecipeCardFront from './components/RecipeCardFront/RecipeCardFront';
-
+import AppContainer from "./components/AppContainer/AppContainer";
 function App() {
-  return <RecipeCardFront />;
+  return <AppContainer />;
 }
 
 export default App;
