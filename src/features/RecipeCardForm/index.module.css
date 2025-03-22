@@ -1,0 +1,7 @@
+.recipeCardFormContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  column-gap: 20px;
+  background-color: purple;
+  width: 100%;
+}

@@ -1,7 +1,8 @@
 import Form from './components/Form/Form';
+import styles from './index.module.css';
 
 const RecipeCardForm = () => (
-  <div>
+  <div className={styles.recipeCardFormContainer}>
     <Form />
   </div>
 );
