@@ -1,0 +1,8 @@
+:root {
+  /* COLOR */
+  --color-1: black;
+  /* BORDERS */
+  --border-900: 10px solid var(--color-1);
+  --border-500: 5px solid var(--color-1);
+  --border-100: 1px solid var(--color-1);
+}

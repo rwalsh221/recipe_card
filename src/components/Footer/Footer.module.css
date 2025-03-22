@@ -1,0 +1,11 @@
+.footer {
+  border-top: var(--border-900);
+  border-bottom: var(--border-500);
+  text-transform: uppercase;
+}
+
+.footerHeading {
+  text-align: center;
+  font-size: clamp(16px, 10vw, 60px);
+  box-shadow: inset 2px 2px 80px black;
+}
