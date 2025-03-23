@@ -1,7 +1,12 @@
 .recipeCardFormContainer {
-  display: grid;
+  /* display: grid; */
   grid-template-columns: repeat(2, 50%);
   column-gap: 20px;
-  background-color: purple;
-  width: 100%;
+  width: 80%;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 3rem;
+  border-radius: 10px;
+  border: var(--border-500-c2);
+  margin: 2rem 0;
 }

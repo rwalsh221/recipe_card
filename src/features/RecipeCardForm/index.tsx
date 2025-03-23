@@ -28,7 +28,7 @@ const RecipeCardForm = () => {
         listItemStateProps={listItemState}
         setListItemStateProps={setListItemState}
       />
-      <FormList listItemState={listItemState} />
+      {/* <FormList listItemState={listItemState} /> */}
     </div>
   );
 };

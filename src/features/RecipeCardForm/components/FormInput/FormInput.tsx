@@ -21,7 +21,7 @@ const FormInput = ({
   changeInputHandler,
 }: FormInputProps) => {
   return (
-    <div>
+    <div className={styles.formInputContainer}>
       <input
         onChange={(e) => {
           changeInputHandler(formInputId, e.target.value);

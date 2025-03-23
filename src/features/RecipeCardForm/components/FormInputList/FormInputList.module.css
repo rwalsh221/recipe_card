@@ -1,0 +1,35 @@
+.formInputListContainer {
+  display: flex;
+  /* align-items: flex-start; */
+  border: var(--border-100-c2);
+  padding: 0.5rem;
+}
+
+.formInputListContainer input,
+.formInputListContainer button {
+  border: var(--border-100-c1);
+  font-size: 20px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.formInputListContainer__inputCtn {
+  flex: 0 1 80%;
+}
+
+.formInputListContainer__btnCtn {
+  flex: 0 0 20%;
+}
+
+.formInputListContainer__btnCtn button {
+  width: 100%;
+  border: 1px solid purple;
+  /* font-size: 20px; */
+}
+
+.formInputListContainer__btnCtn button:disabled {
+  border: 1px solid red;
+  background-color: white;
+  color: red;
+}

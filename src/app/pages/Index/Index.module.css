@@ -1,5 +1,8 @@
 .index {
   min-height: 100vh;
-  background-color: gold;
+  background-image: url('/src/assets/img/bg.jpg');
+  background-size: cover;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }

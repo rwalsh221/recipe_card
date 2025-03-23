@@ -1,14 +1,14 @@
 .header {
-  border-top: var(--border-500);
-  border-bottom: var(--border-900);
+  border-top: var(--border-500-c2);
+  border-bottom: var(--border-900-c2);
   text-transform: uppercase;
   padding: 5px;
-  box-shadow: inset 2px 2px 80px black;
+  background-color: black;
 }
 
 .headerHeading {
-  color: black;
+  color: white;
   padding: 5px;
-  text-align: center;
+  /* text-align: center; */
   font-size: clamp(20px, 10vw, 80px);
 }

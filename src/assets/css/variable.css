@@ -1,8 +1,13 @@
 :root {
   /* COLOR */
   --color-1: black;
+  --color-2: orange;
   /* BORDERS */
-  --border-900: 10px solid var(--color-1);
-  --border-500: 5px solid var(--color-1);
-  --border-100: 1px solid var(--color-1);
+  --border-900-c1: 10px solid var(--color-1);
+  --border-500-c1: 5px solid var(--color-1);
+  --border-100-c1: 1px solid var(--color-1);
+
+  --border-900-c2: 10px solid var(--color-2);
+  --border-500-c2: 5px solid var(--color-2);
+  --border-100-c2: 1px solid var(--color-2);
 }

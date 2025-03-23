@@ -24,27 +24,30 @@ const FormInputList = ({
   addToListItemState,
 }: FormInputListProps) => {
   return (
-    <div>
-      <input
-        onChange={(e) => {
-          changeInputHandler(formInputListId, e.target.value);
-        }}
-        id={formInputListId}
-        name={formInputListId}
-        type={inputType}
-        placeholder={inputPlaceHolder}
-        value={inputValue}
-      />
-      <label htmlFor={formInputListId}>{inputPlaceHolder}</label>
-
-      <button
-        disabled={!inputValue}
-        onClick={(e) => {
-          addToListItemState(e, formInputListId, inputValue);
-        }}
-      >
-        test
-      </button>
+    <div className={styles.formInputListContainer}>
+      <div className={styles.formInputListContainer__inputCtn}>
+        <input
+          onChange={(e) => {
+            changeInputHandler(formInputListId, e.target.value);
+          }}
+          id={formInputListId}
+          name={formInputListId}
+          type={inputType}
+          placeholder={inputPlaceHolder}
+          value={inputValue}
+        />
+        {/* <label htmlFor={formInputListId}>{inputPlaceHolder}</label> */}
+      </div>
+      <div className={styles.formInputListContainer__btnCtn}>
+        <button
+          disabled={!inputValue}
+          onClick={(e) => {
+            addToListItemState(e, formInputListId, inputValue);
+          }}
+        >
+          add
+        </button>
+      </div>
     </div>
   );
 };
