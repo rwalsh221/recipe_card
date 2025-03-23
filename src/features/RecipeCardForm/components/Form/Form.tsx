@@ -1,7 +1,11 @@
 import FormInput from '../FormInput/FormInput';
-import { useState } from 'react';
+import FormInputList from '../FormInputList/FormInputList';
+import { useState, useRef } from 'react';
 
-import { type FormState } from '../../types/RecipeCardFormTypes';
+import {
+  type FormStateType,
+  type ListItemStateType,
+} from '../../types/RecipeCardFormTypes';
 
 // type FormState = {
 //   title: string;
@@ -16,24 +20,47 @@ import { type FormState } from '../../types/RecipeCardFormTypes';
 //   tips?: string;
 // };
 
+type FormProps = {
+  listItemStateProps: ListItemStateType;
+  setListItemStateProps: React.Dispatch<
+    React.SetStateAction<ListItemStateType>
+  >;
+};
+
 type ingredientsState = string[];
 type InstructionsState = string[];
 type tipState = string[];
 
-const Form = () => {
-  const [formState, setFormState] = useState<FormState>({
+const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
+  const [formState, setFormState] = useState<FormStateType>({
     title: '',
     ingredients: '',
     instructions: '',
   });
 
-  const changeInputHandler = (key: keyof FormState, value: string): void => {
-    console.log(key);
-    console.log(value);
+  const changeInputHandler = (
+    key: keyof FormStateType,
+    value: string
+  ): void => {
     const formStateCopy = { ...formState };
     formStateCopy[key] = value;
     setFormState({ ...formStateCopy });
-    console.log(formState);
+  };
+
+  const addToListItemState = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    key: keyof ListItemStateType,
+    value: string
+  ) => {
+    console.log(e.target);
+    e.preventDefault();
+    if (value === '') {
+      return;
+    }
+    const listItemStatePropsCopy = { ...listItemStateProps };
+    listItemStatePropsCopy[key].push(value);
+    setListItemStateProps(listItemStatePropsCopy);
+    console.log(listItemStateProps);
   };
 
   return (
@@ -56,8 +83,9 @@ const Form = () => {
         labelFor="img url"
       />
       {/* NEEDS ADD TO ARRAY */}
-      <FormInput
+      <FormInputList
         changeInputHandler={changeInputHandler}
+        addToListItemState={addToListItemState}
         inputName="ingredients"
         inputPlaceHolder="add ingredient"
         inputValue={formState.ingredients}
@@ -106,7 +134,7 @@ const Form = () => {
         labelFor="ovenTemp"
       />
       {/* NEEDS ADD TO ARRAY */}
-      <FormInput
+      <FormInputList
         changeInputHandler={changeInputHandler}
         inputName="instructions"
         inputPlaceHolder="add instruction"

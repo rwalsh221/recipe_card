@@ -1,4 +1,4 @@
-export type FormState = {
+export type FormStateType = {
   title: string;
   image?: string;
   ingredients: string;
@@ -9,4 +9,9 @@ export type FormState = {
   ovenTemp?: string;
   instructions: string;
   tips?: string;
+};
+
+export type ListItemStateType = {
+  ingredients: string[];
+  instructions: string[];
 };

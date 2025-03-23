@@ -1,6 +1,9 @@
-import styles from './FormInput.module.css';
+import styles from './FormInputList.module.css';
 
-import { type FormStateType } from '../../types/RecipeCardFormTypes';
+import {
+  type FormStateType,
+  type ListItemStateType,
+} from '../../types/RecipeCardFormTypes';
 
 type FormInputProps = {
   labelFor: string;
@@ -9,15 +12,21 @@ type FormInputProps = {
   inputValue?: string;
   inputName: keyof FormStateType;
   changeInputHandler: (key: keyof FormStateType, value: string) => void;
+  addToListItemState?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    key: keyof ListItemStateType,
+    value: string
+  ) => void;
 };
 
-const FormInput = ({
+const FormInputList = ({
   labelFor,
   inputType,
   inputPlaceHolder,
   inputValue,
   inputName,
   changeInputHandler,
+  addToListItemState,
 }: FormInputProps) => {
   return (
     <div>
@@ -31,8 +40,18 @@ const FormInput = ({
         value={inputValue}
       />
       <label htmlFor={labelFor} />
+
+      {addToListItemState && (
+        <button
+          onClick={(e) => {
+            addToListItemState(e, inputName, inputValue);
+          }}
+        >
+          test
+        </button>
+      )}
     </div>
   );
 };
 
-export default FormInput;
+export default FormInputList;
