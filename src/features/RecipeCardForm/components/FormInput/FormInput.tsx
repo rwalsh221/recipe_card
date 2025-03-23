@@ -1,36 +1,38 @@
 import styles from './FormInput.module.css';
 
-import { type FormStateType } from '../../types/RecipeCardFormTypes';
+import {
+  type FormStateType,
+  type FormInputId,
+} from '../../types/RecipeCardFormTypes';
 
 type FormInputProps = {
-  labelFor: string;
+  formInputId: FormInputId;
   inputType: 'text' | 'url' | 'number';
   inputPlaceHolder: string;
   inputValue?: string;
-  inputName: keyof FormStateType;
   changeInputHandler: (key: keyof FormStateType, value: string) => void;
 };
 
 const FormInput = ({
-  labelFor,
+  formInputId,
   inputType,
   inputPlaceHolder,
   inputValue,
-  inputName,
   changeInputHandler,
 }: FormInputProps) => {
   return (
     <div>
       <input
         onChange={(e) => {
-          changeInputHandler(inputName, e.target.value);
+          changeInputHandler(formInputId, e.target.value);
         }}
-        name={inputName}
+        id={formInputId}
+        name={formInputId}
         type={inputType}
         placeholder={inputPlaceHolder}
         value={inputValue}
       />
-      <label htmlFor={labelFor} />
+      <label htmlFor={formInputId} />
     </div>
   );
 };

@@ -4,10 +4,7 @@ import { useState } from 'react';
 import Form from './components/Form/Form';
 import FormList from './components/FormList/FormList';
 
-import {
-  type FormStateType,
-  type ListItemStateType,
-} from './types/RecipeCardFormTypes';
+import { type ListItemStateType } from './types/RecipeCardFormTypes';
 
 const RecipeCardForm = () => {
   const [listItemState, setListItemState] = useState<ListItemStateType>({

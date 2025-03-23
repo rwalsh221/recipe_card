@@ -1,50 +1,47 @@
 import styles from './FormInputList.module.css';
 
-import {
-  type FormStateType,
-  type ListItemStateType,
-} from '../../types/RecipeCardFormTypes';
+import { type FormInputListId } from '../../types/RecipeCardFormTypes';
 
-type FormInputProps = {
-  labelFor: string;
-  inputType: 'text' | 'url' | 'number';
+type FormInputListProps = {
+  formInputListId: FormInputListId;
+  inputType: 'text';
   inputPlaceHolder: string;
-  inputValue?: string;
-  inputName: keyof FormStateType;
-  changeInputHandler: (key: keyof FormStateType, value: string) => void;
-  addToListItemState?: (
+  inputValue: string;
+  changeInputHandler: (key: FormInputListId, value: string) => void;
+  addToListItemState: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    key: keyof ListItemStateType,
+    key: FormInputListId,
     value: string
   ) => void;
 };
 
 const FormInputList = ({
-  labelFor,
+  formInputListId,
   inputType,
   inputPlaceHolder,
   inputValue,
-  inputName,
   changeInputHandler,
   addToListItemState,
-}: FormInputProps) => {
+}: FormInputListProps) => {
   return (
     <div>
       <input
         onChange={(e) => {
-          changeInputHandler(inputName, e.target.value);
+          changeInputHandler(formInputListId, e.target.value);
         }}
-        name={inputName}
+        id={formInputListId}
+        name={formInputListId}
         type={inputType}
         placeholder={inputPlaceHolder}
         value={inputValue}
       />
-      <label htmlFor={labelFor} />
+      <label htmlFor={formInputListId} />
 
       {addToListItemState && (
         <button
+          disabled={!inputValue}
           onClick={(e) => {
-            addToListItemState(e, inputName, inputValue);
+            addToListItemState(e, formInputListId, inputValue);
           }}
         >
           test

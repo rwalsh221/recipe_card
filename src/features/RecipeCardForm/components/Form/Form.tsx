@@ -1,6 +1,6 @@
 import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 import {
   type FormStateType,
@@ -27,15 +27,18 @@ type FormProps = {
   >;
 };
 
-type ingredientsState = string[];
-type InstructionsState = string[];
-type tipState = string[];
-
 const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
   const [formState, setFormState] = useState<FormStateType>({
     title: '',
+    image: '',
     ingredients: '',
+    url: '',
+    serves: '',
+    prepTime: '',
+    cookTime: '',
+    ovenTemp: '',
     instructions: '',
+    tips: '',
   });
 
   const changeInputHandler = (
@@ -49,106 +52,95 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
 
   const addToListItemState = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    key: keyof ListItemStateType,
-    value: string
+    key: keyof ListItemStateType
   ) => {
-    console.log(e.target);
     e.preventDefault();
-    if (value === '') {
-      return;
-    }
     const listItemStatePropsCopy = { ...listItemStateProps };
-    listItemStatePropsCopy[key].push(value);
+    const formStateCopy = { ...formState };
+    listItemStatePropsCopy[key].push(formStateCopy[key]);
+    formStateCopy[key] = '';
     setListItemStateProps(listItemStatePropsCopy);
-    console.log(listItemStateProps);
+    setFormState(formStateCopy);
   };
 
   return (
     <form>
       {/* FRONT */}
       <FormInput
+        formInputId="title"
         changeInputHandler={changeInputHandler}
-        inputName="title"
         inputPlaceHolder="title"
         inputValue={formState.title}
         inputType="text"
-        labelFor="title"
       />
       <FormInput
+        formInputId="image"
         changeInputHandler={changeInputHandler}
-        inputName="image"
         inputPlaceHolder="img url"
         inputValue={formState.image}
         inputType="url"
-        labelFor="img url"
       />
       {/* NEEDS ADD TO ARRAY */}
       <FormInputList
+        formInputListId="ingredients"
         changeInputHandler={changeInputHandler}
         addToListItemState={addToListItemState}
-        inputName="ingredients"
         inputPlaceHolder="add ingredient"
         inputValue={formState.ingredients}
         inputType="text"
-        labelFor="ingredients"
       />
       <FormInput
+        formInputId="url"
         changeInputHandler={changeInputHandler}
-        inputName="url"
         inputPlaceHolder="recipe url"
         inputValue={formState.url}
         inputType="text"
-        labelFor="url"
       />
       {/* BACK */}
       <FormInput
+        formInputId="serves"
         changeInputHandler={changeInputHandler}
-        inputName="serves"
         inputPlaceHolder="serves"
         inputValue={formState.serves}
         inputType="number"
-        labelFor="serves"
       />
       <FormInput
+        formInputId="prepTime"
         changeInputHandler={changeInputHandler}
-        inputName="prepTime"
         inputPlaceHolder="preperation time"
         inputValue={formState.prepTime}
         inputType="text"
-        labelFor="prepTime"
       />
       <FormInput
+        formInputId="cookTime"
         changeInputHandler={changeInputHandler}
-        inputName="cookTime"
         inputPlaceHolder="cooking time"
         inputValue={formState.cookTime}
         inputType="text"
-        labelFor="cookTime"
       />
       <FormInput
+        formInputId="ovenTemp"
         changeInputHandler={changeInputHandler}
-        inputName="ovenTemp"
         inputPlaceHolder="oven temperature"
         inputValue={formState.ovenTemp}
         inputType="text"
-        labelFor="ovenTemp"
       />
       {/* NEEDS ADD TO ARRAY */}
       <FormInputList
-        changeInputHandler={changeInputHandler}
-        inputName="instructions"
+        formInputListId="instructions"
         inputPlaceHolder="add instruction"
         inputValue={formState.instructions}
         inputType="text"
-        labelFor="instructions"
-      />
-      <FormInput
         changeInputHandler={changeInputHandler}
-        inputName="tips"
+        addToListItemState={addToListItemState}
+      />
+      {/* LIST???? */}
+      <FormInput
+        formInputId="tips"
+        changeInputHandler={changeInputHandler}
         inputPlaceHolder="add tip"
         inputValue={formState.tips}
         inputType="text"
-        labelFor="tips"
       />
       {/* need FORM SUBMIT */}
     </form>
