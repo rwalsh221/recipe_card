@@ -8,8 +8,18 @@ import { type ListItemStateType } from './types/RecipeCardFormTypes';
 
 const RecipeCardForm = () => {
   const [listItemState, setListItemState] = useState<ListItemStateType>({
-    ingredients: [],
-    instructions: [],
+    ingredients: {
+      title: 'ingredients',
+      listItems: [],
+    },
+    instructions: {
+      title: 'instructions',
+      listItems: [],
+    },
+    tips: {
+      title: 'tips',
+      listItems: [],
+    },
   });
 
   return (
@@ -18,7 +28,7 @@ const RecipeCardForm = () => {
         listItemStateProps={listItemState}
         setListItemStateProps={setListItemState}
       />
-      <FormList />
+      <FormList listItemState={listItemState} />
     </div>
   );
 };

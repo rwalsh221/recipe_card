@@ -5,10 +5,9 @@ export type FormInputId =
   | 'serves'
   | 'prepTime'
   | 'cookTime'
-  | 'ovenTemp'
-  | 'tips';
+  | 'ovenTemp';
 
-export type FormInputListId = 'instructions' | 'ingredients';
+export type FormInputListId = 'instructions' | 'ingredients' | 'tips';
 
 export type FormStateType = {
   title: string;
@@ -20,10 +19,20 @@ export type FormStateType = {
   cookTime: string;
   ovenTemp: string;
   instructions: string;
-  tips?: string;
+  tips: string;
 };
 
 export type ListItemStateType = {
-  ingredients: string[];
-  instructions: string[];
+  ingredients: {
+    title: 'ingredients';
+    listItems: string[];
+  };
+  instructions: {
+    title: 'instructions';
+    listItems: string[];
+  };
+  tips: {
+    title: 'tips';
+    listItems: string[];
+  };
 };

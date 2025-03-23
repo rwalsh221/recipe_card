@@ -35,18 +35,16 @@ const FormInputList = ({
         placeholder={inputPlaceHolder}
         value={inputValue}
       />
-      <label htmlFor={formInputListId} />
+      <label htmlFor={formInputListId}>{inputPlaceHolder}</label>
 
-      {addToListItemState && (
-        <button
-          disabled={!inputValue}
-          onClick={(e) => {
-            addToListItemState(e, formInputListId, inputValue);
-          }}
-        >
-          test
-        </button>
-      )}
+      <button
+        disabled={!inputValue}
+        onClick={(e) => {
+          addToListItemState(e, formInputListId, inputValue);
+        }}
+      >
+        test
+      </button>
     </div>
   );
 };

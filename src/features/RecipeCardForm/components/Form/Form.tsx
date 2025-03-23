@@ -57,7 +57,7 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
     e.preventDefault();
     const listItemStatePropsCopy = { ...listItemStateProps };
     const formStateCopy = { ...formState };
-    listItemStatePropsCopy[key].push(formStateCopy[key]);
+    listItemStatePropsCopy[key].listItems.push(formStateCopy[key]);
     formStateCopy[key] = '';
     setListItemStateProps(listItemStatePropsCopy);
     setFormState(formStateCopy);
@@ -135,14 +135,15 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
         addToListItemState={addToListItemState}
       />
       {/* LIST???? */}
-      <FormInput
-        formInputId="tips"
-        changeInputHandler={changeInputHandler}
+      <FormInputList
+        formInputListId="tips"
         inputPlaceHolder="add tip"
         inputValue={formState.tips}
         inputType="text"
+        changeInputHandler={changeInputHandler}
+        addToListItemState={addToListItemState}
       />
-      {/* need FORM SUBMIT */}
+      <button>CREATE CARD</button>
     </form>
   );
 };
