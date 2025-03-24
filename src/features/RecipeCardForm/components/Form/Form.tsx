@@ -1,8 +1,9 @@
 import styles from './Form.module.css';
+import { useState } from 'react';
 
 import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
-import { useState } from 'react';
+import FormList from '../FormList/FormList';
 
 import {
   type FormStateType,
@@ -22,14 +23,14 @@ import {
 //   tips?: string;
 // };
 
-type FormProps = {
-  listItemStateProps: ListItemStateType;
-  setListItemStateProps: React.Dispatch<
-    React.SetStateAction<ListItemStateType>
-  >;
-};
+// type FormProps = {
+//   listItemStateProps: ListItemStateType;
+//   setListItemStateProps: React.Dispatch<
+//     React.SetStateAction<ListItemStateType>
+//   >;
+// };
 
-const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
+const Form = () => {
   const [formState, setFormState] = useState<FormStateType>({
     title: '',
     image: '',
@@ -43,6 +44,21 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
     tips: '',
   });
 
+  const [listItemState, setListItemState] = useState<ListItemStateType>({
+    ingredients: {
+      title: 'ingredients',
+      listItems: [],
+    },
+    instructions: {
+      title: 'instructions',
+      listItems: [],
+    },
+    tips: {
+      title: 'tips',
+      listItems: [],
+    },
+  });
+
   const changeInputHandler = (
     key: keyof FormStateType,
     value: string
@@ -52,16 +68,29 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
     setFormState({ ...formStateCopy });
   };
 
+  // const addToListItemState = (
+  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  //   key: keyof ListItemStateType
+  // ) => {
+  //   e.preventDefault();
+  //   const listItemStatePropsCopy = { ...listItemStateProps };
+  //   const formStateCopy = { ...formState };
+  //   listItemStatePropsCopy[key].listItems.push(formStateCopy[key]);
+  //   formStateCopy[key] = '';
+  //   setListItemStateProps(listItemStatePropsCopy);
+  //   setFormState(formStateCopy);
+  // };
+
   const addToListItemState = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     key: keyof ListItemStateType
   ) => {
     e.preventDefault();
-    const listItemStatePropsCopy = { ...listItemStateProps };
+    const listItemStateCopy = { ...listItemState };
     const formStateCopy = { ...formState };
-    listItemStatePropsCopy[key].listItems.push(formStateCopy[key]);
+    listItemStateCopy[key].listItems.push(formStateCopy[key]);
     formStateCopy[key] = '';
-    setListItemStateProps(listItemStatePropsCopy);
+    setListItemState(listItemStateCopy);
     setFormState(formStateCopy);
   };
 
@@ -134,7 +163,9 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
           inputValue={formState.ingredients}
           inputType="text"
         />
-        <div className={styles.listItemContainer}>test</div>
+        <div className={styles.listItemContainer}>
+          <FormList listItemState={listItemState.ingredients} />
+        </div>
       </div>
       <div className={styles.formAdditionalInfo}>
         <div className={styles.formAdditionalInfo__inputContainer}>
@@ -147,7 +178,9 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
             changeInputHandler={changeInputHandler}
             addToListItemState={addToListItemState}
           />
-          <div className={styles.listItemContainer}>test</div>
+          <div className={styles.listItemContainer}>
+            <FormList listItemState={listItemState.instructions} />
+          </div>
         </div>
         <div className={styles.formAdditionalInfo__inputContainer}>
           <h2 className={styles.formSubHeading}>Add Tips:</h2>
@@ -159,7 +192,9 @@ const Form = ({ listItemStateProps, setListItemStateProps }: FormProps) => {
             changeInputHandler={changeInputHandler}
             addToListItemState={addToListItemState}
           />
-          <div className={styles.listItemContainer}>test</div>
+          <div className={styles.listItemContainer}>
+            <FormList listItemState={listItemState.tips} />
+          </div>
         </div>
       </div>
       <button>CREATE CARD</button>

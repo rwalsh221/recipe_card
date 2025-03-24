@@ -33,4 +33,5 @@
   min-height: 5rem;
   grid-column: 2;
   grid-row: 1 / span 2;
+  color: hotpink;
 }

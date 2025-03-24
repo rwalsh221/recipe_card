@@ -22,17 +22,13 @@ export type FormStateType = {
   tips: string;
 };
 
+export type ListItemStateObject = {
+  title: 'ingredients' | 'instructions' | 'tips';
+  listItems: string[];
+};
+
 export type ListItemStateType = {
-  ingredients: {
-    title: 'ingredients';
-    listItems: string[];
-  };
-  instructions: {
-    title: 'instructions';
-    listItems: string[];
-  };
-  tips: {
-    title: 'tips';
-    listItems: string[];
-  };
+  ingredients: ListItemStateObject;
+  instructions: ListItemStateObject;
+  tips: ListItemStateObject;
 };
