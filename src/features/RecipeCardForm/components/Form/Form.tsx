@@ -163,7 +163,7 @@ const Form = () => {
           inputValue={formState.ingredients}
           inputType="text"
         />
-        <div className={styles.listItemContainer}>
+        <div className={styles.formListContainer}>
           <FormList listItemState={listItemState.ingredients} />
         </div>
       </div>
@@ -178,7 +178,7 @@ const Form = () => {
             changeInputHandler={changeInputHandler}
             addToListItemState={addToListItemState}
           />
-          <div className={styles.listItemContainer}>
+          <div className={styles.formListContainer}>
             <FormList listItemState={listItemState.instructions} />
           </div>
         </div>
@@ -192,7 +192,7 @@ const Form = () => {
             changeInputHandler={changeInputHandler}
             addToListItemState={addToListItemState}
           />
-          <div className={styles.listItemContainer}>
+          <div className={styles.formListContainer}>
             <FormList listItemState={listItemState.tips} />
           </div>
         </div>

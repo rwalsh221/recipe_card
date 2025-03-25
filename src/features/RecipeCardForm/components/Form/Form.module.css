@@ -27,11 +27,10 @@
   /* grid-column: 1 / span 2; */
 }
 
-.listItemContainer {
+.formListContainer {
   /* margin: 0.5rem; */
   border: var(--border-100-c2);
   min-height: 5rem;
   grid-column: 2;
   grid-row: 1 / span 2;
-  color: hotpink;
 }

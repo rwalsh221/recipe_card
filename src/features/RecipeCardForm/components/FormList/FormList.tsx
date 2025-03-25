@@ -1,3 +1,5 @@
+import styles from './FormList.module.css';
+
 import FormListItem from '../FormListItem/FormListItem';
 
 import { type ListItemStateObject } from '../../types/RecipeCardFormTypes';
@@ -31,9 +33,12 @@ const FormList = ({ listItemState }: FormListProps) => {
   //   </div>
   // );
   return (
-    <div>
-      <h3>{listItemState.title}</h3>
-      <ul>
+    <div className={styles.formList}>
+      <div className={styles.formListHeader}>
+        <h3>{listItemState.title}</h3>
+        <button>edit</button>
+      </div>
+      <ul className={styles.listItemContainer}>
         {listItemState.listItems.map((el) => (
           <FormListItem formListItemContent={el} />
         ))}
