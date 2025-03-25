@@ -4,6 +4,7 @@ import { useState } from 'react';
 import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
 import FormList from '../FormList/FormList';
+import FormModal from '../FormModal/FormModal';
 
 import {
   type FormStateType,
@@ -47,7 +48,7 @@ const Form = () => {
   const [listItemState, setListItemState] = useState<ListItemStateType>({
     ingredients: {
       title: 'ingredients',
-      listItems: [],
+      listItems: ['test1', 'test2'],
     },
     instructions: {
       title: 'instructions',
@@ -95,110 +96,113 @@ const Form = () => {
   };
 
   return (
-    <form>
-      {/* FRONT */}
-      <div className={styles.formBasicInfo}>
-        <h2 className={styles.formSubHeading}>Basic Information:</h2>
-        <div className={styles.formBasicInfo__inputContainer}>
-          <FormInput
-            formInputId="title"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="title"
-            inputValue={formState.title}
-            inputType="text"
-          />
-          <FormInput
-            formInputId="image"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="img url"
-            inputValue={formState.image}
-            inputType="url"
-          />
-          <FormInput
-            formInputId="url"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="recipe url"
-            inputValue={formState.url}
-            inputType="text"
-          />
-          {/* BACK */}
-          <FormInput
-            formInputId="serves"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="serves"
-            inputValue={formState.serves}
-            inputType="number"
-          />
-          <FormInput
-            formInputId="prepTime"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="preperation time"
-            inputValue={formState.prepTime}
-            inputType="text"
-          />
-          <FormInput
-            formInputId="cookTime"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="cooking time"
-            inputValue={formState.cookTime}
-            inputType="text"
-          />
-          <FormInput
-            formInputId="ovenTemp"
-            changeInputHandler={changeInputHandler}
-            inputPlaceHolder="oven temperature"
-            inputValue={formState.ovenTemp}
-            inputType="text"
-          />
-        </div>
-      </div>
-      {/* NEEDS ADD TO ARRAY */}
-      <div className={styles.formAdditionalInfo__inputContainer}>
-        <h2 className={styles.formSubHeading}>Add Ingredients:</h2>
-        <FormInputList
-          formInputListId="ingredients"
-          changeInputHandler={changeInputHandler}
-          addToListItemState={addToListItemState}
-          inputPlaceHolder="add ingredient"
-          inputValue={formState.ingredients}
-          inputType="text"
-        />
-        <div className={styles.formListContainer}>
-          <FormList listItemState={listItemState.ingredients} />
-        </div>
-      </div>
-      <div className={styles.formAdditionalInfo}>
-        <div className={styles.formAdditionalInfo__inputContainer}>
-          <h2 className={styles.formSubHeading}>Add Instructions:</h2>
-          <FormInputList
-            formInputListId="instructions"
-            inputPlaceHolder="add instruction"
-            inputValue={formState.instructions}
-            inputType="text"
-            changeInputHandler={changeInputHandler}
-            addToListItemState={addToListItemState}
-          />
-          <div className={styles.formListContainer}>
-            <FormList listItemState={listItemState.instructions} />
+    <>
+      <FormModal listItemState={listItemState.ingredients.listItems} />
+      <form>
+        {/* FRONT */}
+        <div className={styles.formBasicInfo}>
+          <h2 className={styles.formSubHeading}>Basic Information:</h2>
+          <div className={styles.formBasicInfo__inputContainer}>
+            <FormInput
+              formInputId="title"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="title"
+              inputValue={formState.title}
+              inputType="text"
+            />
+            <FormInput
+              formInputId="image"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="img url"
+              inputValue={formState.image}
+              inputType="url"
+            />
+            <FormInput
+              formInputId="url"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="recipe url"
+              inputValue={formState.url}
+              inputType="text"
+            />
+            {/* BACK */}
+            <FormInput
+              formInputId="serves"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="serves"
+              inputValue={formState.serves}
+              inputType="number"
+            />
+            <FormInput
+              formInputId="prepTime"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="preperation time"
+              inputValue={formState.prepTime}
+              inputType="text"
+            />
+            <FormInput
+              formInputId="cookTime"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="cooking time"
+              inputValue={formState.cookTime}
+              inputType="text"
+            />
+            <FormInput
+              formInputId="ovenTemp"
+              changeInputHandler={changeInputHandler}
+              inputPlaceHolder="oven temperature"
+              inputValue={formState.ovenTemp}
+              inputType="text"
+            />
           </div>
         </div>
+        {/* NEEDS ADD TO ARRAY */}
         <div className={styles.formAdditionalInfo__inputContainer}>
-          <h2 className={styles.formSubHeading}>Add Tips:</h2>
+          <h2 className={styles.formSubHeading}>Add Ingredients:</h2>
           <FormInputList
-            formInputListId="tips"
-            inputPlaceHolder="add tip"
-            inputValue={formState.tips}
-            inputType="text"
+            formInputListId="ingredients"
             changeInputHandler={changeInputHandler}
             addToListItemState={addToListItemState}
+            inputPlaceHolder="add ingredient"
+            inputValue={formState.ingredients}
+            inputType="text"
           />
           <div className={styles.formListContainer}>
-            <FormList listItemState={listItemState.tips} />
+            <FormList listItemState={listItemState.ingredients} />
           </div>
         </div>
-      </div>
-      <button>CREATE CARD</button>
-    </form>
+        <div className={styles.formAdditionalInfo}>
+          <div className={styles.formAdditionalInfo__inputContainer}>
+            <h2 className={styles.formSubHeading}>Add Instructions:</h2>
+            <FormInputList
+              formInputListId="instructions"
+              inputPlaceHolder="add instruction"
+              inputValue={formState.instructions}
+              inputType="text"
+              changeInputHandler={changeInputHandler}
+              addToListItemState={addToListItemState}
+            />
+            <div className={styles.formListContainer}>
+              <FormList listItemState={listItemState.instructions} />
+            </div>
+          </div>
+          <div className={styles.formAdditionalInfo__inputContainer}>
+            <h2 className={styles.formSubHeading}>Add Tips:</h2>
+            <FormInputList
+              formInputListId="tips"
+              inputPlaceHolder="add tip"
+              inputValue={formState.tips}
+              inputType="text"
+              changeInputHandler={changeInputHandler}
+              addToListItemState={addToListItemState}
+            />
+            <div className={styles.formListContainer}>
+              <FormList listItemState={listItemState.tips} />
+            </div>
+          </div>
+        </div>
+        <button>CREATE CARD</button>
+      </form>
+    </>
   );
 };
 

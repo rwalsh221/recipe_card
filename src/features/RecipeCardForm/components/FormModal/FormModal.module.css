@@ -1,0 +1,9 @@
+.formModal {
+  width: 60vw;
+  height: 60vw;
+}
+
+dialog::backdrop {
+  background-color: red;
+  /* opacity: 0.6; */
+}
