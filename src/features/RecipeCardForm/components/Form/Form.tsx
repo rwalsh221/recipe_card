@@ -95,9 +95,20 @@ const Form = () => {
     setFormState(formStateCopy);
   };
 
+  const testSetFunc = (input) => {
+    console.log('clci');
+    const listItemStateCopy = { ...listItemState };
+    listItemStateCopy.ingredients.listItems = [...input];
+    console.log(listItemStateCopy);
+    setListItemState({ ...listItemStateCopy });
+  };
+
   return (
     <>
-      <FormModal listItemState={listItemState.ingredients.listItems} />
+      <FormModal
+        listItemState={listItemState.ingredients.listItems}
+        setListItemState={testSetFunc}
+      />
       <form>
         {/* FRONT */}
         <div className={styles.formBasicInfo}>
