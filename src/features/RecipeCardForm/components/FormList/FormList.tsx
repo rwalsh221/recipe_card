@@ -12,7 +12,7 @@ type FormListProps = {
   listItemState: ListItemStateObject;
 };
 
-const FormList = ({ listItemState }: FormListProps) => {
+const FormList = ({ listItemState, showModalHandler }: FormListProps) => {
   console.log(listItemState);
   // return (
   //   <div>
@@ -36,7 +36,14 @@ const FormList = ({ listItemState }: FormListProps) => {
     <div className={styles.formList}>
       <div className={styles.formListHeader}>
         <h3>{listItemState.title}</h3>
-        <button>edit</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            showModalHandler(listItemState.title);
+          }}
+        >
+          edit
+        </button>
       </div>
       <ul className={styles.listItemContainer}>
         {listItemState.listItems.map((el) => (

@@ -1,7 +1,7 @@
 import styles from './FormModal.module.css';
 
 import FormInput from '../FormInput/FormInput';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { type ListItemStateType } from '../../types/RecipeCardFormTypes';
 
@@ -14,7 +14,11 @@ type FormModalState = {
   [key: string]: { prevValue: string; currValue: string };
 };
 
-const FormModal = ({ listItemState, setListItemState }: FormModalProps) => {
+const FormModal = ({
+  ref,
+  listItemState,
+  setListItemState,
+}: FormModalProps) => {
   // will take Listitemstate and render inputs for each state element
   // needs state to control form
   // needs btn to update formstate and close modal?
@@ -29,6 +33,15 @@ const FormModal = ({ listItemState, setListItemState }: FormModalProps) => {
     console.log(stateObject);
     return stateObject;
   });
+
+  useEffect(() => {
+    if (modalRef.current) {
+      console.log(modalRef.current);
+      modalRef.current.showModal();
+    }
+  }, []);
+
+  const modalRef = useRef();
 
   console.log(formModalState);
 
@@ -58,7 +71,7 @@ const FormModal = ({ listItemState, setListItemState }: FormModalProps) => {
   };
 
   return (
-    <dialog open className={styles.formModal}>
+    <dialog ref={modalRef} className={styles.formModal}>
       <p>Greetings, one and all!</p>
       <form method="dialog">
         {Object.keys(formModalState).map((el) => (

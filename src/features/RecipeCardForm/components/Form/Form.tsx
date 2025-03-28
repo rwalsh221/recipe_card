@@ -1,5 +1,5 @@
 import styles from './Form.module.css';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
@@ -60,6 +60,13 @@ const Form = () => {
     },
   });
 
+  const formRef: React.RefObject<HTMLDialogElement> = useRef();
+
+  console.log(formRef);
+
+  // formRef.current.close();
+  // formRef.current.showModal();
+
   const changeInputHandler = (
     key: keyof FormStateType,
     value: string
@@ -103,9 +110,16 @@ const Form = () => {
     setListItemState({ ...listItemStateCopy });
   };
 
+  const showFormModal = (input) => {
+    formRef.current.dataset.key = input;
+    formRef.current.showModal();
+  };
+
   return (
     <>
+      {/* when clcik edit on list items need to show modal and pass list item state to it */}
       <FormModal
+        ref={formRef}
         listItemState={listItemState.ingredients.listItems}
         setListItemState={testSetFunc}
       />
@@ -178,7 +192,10 @@ const Form = () => {
             inputType="text"
           />
           <div className={styles.formListContainer}>
-            <FormList listItemState={listItemState.ingredients} />
+            <FormList
+              listItemState={listItemState.ingredients}
+              showModalHandler={showFormModal}
+            />
           </div>
         </div>
         <div className={styles.formAdditionalInfo}>
