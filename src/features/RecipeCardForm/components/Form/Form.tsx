@@ -1,5 +1,5 @@
 import styles from './Form.module.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useId } from 'react';
 
 import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
@@ -48,7 +48,11 @@ const Form = () => {
   const [listItemState, setListItemState] = useState<ListItemStateType>({
     ingredients: {
       title: 'ingredients',
-      listItems: ['test1', 'test2'],
+      listItems: [
+        { id: useId(), position: 1, content: 'test1' },
+        { id: useId(), position: 2, content: 'test2' },
+        // 'test',
+      ],
     },
     instructions: {
       title: 'instructions',

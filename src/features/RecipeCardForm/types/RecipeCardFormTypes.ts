@@ -22,9 +22,15 @@ export type FormStateType = {
   tips: string;
 };
 
+export type ListItemStateListItems = {
+  id: string;
+  position: number;
+  content: string;
+};
+
 export type ListItemStateObject = {
   title: 'ingredients' | 'instructions' | 'tips';
-  listItems: string[];
+  listItems: ListItemStateListItems[];
 };
 
 export type ListItemStateType = {
