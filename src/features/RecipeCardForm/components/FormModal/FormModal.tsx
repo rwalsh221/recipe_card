@@ -1,5 +1,6 @@
 import styles from './FormModal.module.css';
 
+import DoublyLinkedListTest from '../../../../helper/data_structure/DoublyLinkedList';
 import FormInput from '../FormInput/FormInput';
 import { useState, useRef, useEffect } from 'react';
 
@@ -97,6 +98,7 @@ const FormModal = ({
 
   return (
     <dialog ref={modalRef} className={styles.formModal}>
+      <DoublyLinkedListTest />
       <p>Greetings, one and all!</p>
       <form method="dialog">
         {Object.keys(formModalState).map((el) => {

@@ -87,6 +87,10 @@ class DoublyLinkedList {
   }
 
   get(index: number) {
+    console.log(index);
+    if (this.head === null || this.tail === null) {
+      return undefined;
+    }
     if (index < 0 || index >= this.length) {
       return undefined;
     }
@@ -98,16 +102,18 @@ class DoublyLinkedList {
     }
 
     const mid = Math.floor(this.length / 2);
-    let temp;
-    if (index < mid) {
+    console.log(mid);
+    let temp: ListItemNodeType;
+    if (index <= mid) {
       temp = this.head;
       for (let i = 0; i < mid; i++) {
-        temp = temp.next;
+        console.log(temp);
+        temp = temp.next as ListItemNodeType;
       }
     } else {
       temp = this.tail;
-      for (let i = this.length; i > mid; i--) {
-        temp = temp.prev;
+      for (let i = this.length - 1; i > index; i--) {
+        temp = temp.prev as ListItemNodeType;
       }
     }
 
@@ -136,17 +142,23 @@ class DoublyLinkedList {
     }
 
     const pre = this.get(index - 1);
-    const temp = pre.next;
+    if (!pre) {
+      return undefined;
+    }
 
-    pre.next = temp?.next;
-    temp?.next?.prev = pre;
+    if (pre.next) {
+      const temp = pre.next;
 
-    temp.next = null;
-    temp?.prev = null;
+      pre.next = temp?.next;
+      temp.next.prev = pre;
 
-    this.length -= 1;
+      temp.next = null;
+      temp.prev = null;
 
-    return temp;
+      this.length -= 1;
+
+      return temp;
+    }
   }
 
   swap(node1: ListItemNodeType, node2: ListItemNodeType) {
@@ -157,28 +169,28 @@ class DoublyLinkedList {
     node1.prev = node2;
   }
 
-  increaseOrder(index) {
-    if (index < 0 || index >= this.length) {
-      return false;
-    }
-    if (index === 0) {
-      return false;
-    }
+  // increaseOrder(index) {
+  //   if (index < 0 || index >= this.length) {
+  //     return false;
+  //   }
+  //   if (index === 0) {
+  //     return false;
+  //   }
 
-    const node1 = this.get(index);
-    const node2 = node1.next;
+  //   const node1 = this.get(index);
+  //   const node2 = node1.next;
 
-    this.swap(node1, node2);
+  //   this.swap(node1, node2);
 
-    node1?.position -= 1;
-    node2?.position += 1;
+  //   node1?.position -= 1;
+  //   node2?.position += 1;
 
-    if (this.head === node1) {
-      this.head = node2;
-    }
+  //   if (this.head === node1) {
+  //     this.head = node2;
+  //   }
 
-    return this;
-  }
+  //   return this;
+  // }
 
   decreaseOrder(index) {
     if (index < 0 || index >= this.length) {
@@ -189,12 +201,15 @@ class DoublyLinkedList {
     }
 
     const node1 = this.get(index);
-    const node2 = node1.next;
+    if (!node1) {
+      return false;
+    }
+    const node2: ListItemNodeType = node1.next;
 
     this.swap(node1, node2);
 
-    node1?.position += 1;
-    node2?.position -= 1;
+    node1.position += 1;
+    node2.position -= 1;
 
     if (node2 === this.tail) {
       this.tail = node1;
@@ -204,4 +219,33 @@ class DoublyLinkedList {
   }
 }
 
-export default DoublyLinkedList;
+const DoublyLinkedListTest = () => {
+  console.log(
+    'doubly linked list start *****************************************************************************'
+  );
+
+  const newDoublyLinkedList = new DoublyLinkedList();
+  newDoublyLinkedList.push('id:1', 1, 'first item');
+  newDoublyLinkedList.push('id:2', 2, 'second item');
+  newDoublyLinkedList.push('id:3', 3, 'third item');
+  newDoublyLinkedList.push('id:4', 4, 'forth item');
+  newDoublyLinkedList.push('id:5', 5, 'fifth item');
+  newDoublyLinkedList.push('id:6', 6, 'sixth item');
+  newDoublyLinkedList.push('id:7', 7, 'seventh item');
+  newDoublyLinkedList.push('id:8', 8, 'eighth item');
+  // console.log(newDoublyLinkedList.pop());
+  // console.log(newDoublyLinkedList.shift());
+  // console.log(newDoublyLinkedList.getLength());
+  // console.log(newDoublyLinkedList.get(6)); // double check get()
+  console.log(newDoublyLinkedList.update(0, 'updated first item'));
+  console.log(newDoublyLinkedList.update(6, 'updated seventh item'));
+
+  console.log(newDoublyLinkedList);
+  console.log(
+    'doubly linked list end *****************************************************************************'
+  );
+  return <div></div>;
+};
+
+export default DoublyLinkedListTest;
+// export default DoublyLinkedList;
