@@ -34,6 +34,33 @@ class DoublyLinkedList {
     this.length = 0;
   }
 
+  print() {
+    if (this.head === null || this.tail === null) {
+      return undefined;
+    }
+
+    const arr = [];
+    let temp = this.head;
+
+    while (temp.next) {
+      arr.push(
+        `PRE NODE: ${temp.prev ? temp.prev.id : null} :: NODE: ${temp.id}: P${
+          temp.position
+        } :: NEXT NODE: ${temp.next.id}`
+      );
+      temp = temp.next;
+    }
+
+    arr.push(
+      `PRE NODE: ${this.tail.prev ? this.tail.prev.id : null} :: NODE: ${
+        this.tail.id
+      }: P${this.tail.position} :: NEXT NODE: ${
+        this.tail.next ? this.tail.next.id : null
+      }`
+    );
+    return arr;
+  }
+
   push(id: string, position: number, content: string) {
     const newNode = new Node(id, position, content);
     if (this.head === null || this.tail === null) {
@@ -106,7 +133,7 @@ class DoublyLinkedList {
     let temp: ListItemNodeType;
     if (index <= mid) {
       temp = this.head;
-      for (let i = 0; i < mid; i++) {
+      for (let i = 0; i < index; i++) {
         console.log(temp);
         temp = temp.next as ListItemNodeType;
       }
@@ -162,35 +189,47 @@ class DoublyLinkedList {
   }
 
   swap(node1: ListItemNodeType, node2: ListItemNodeType) {
-    node1.next = node2.next;
-    node2.next = node1;
+    console.log('swap', node1, node2);
+    if (node1 !== this.tail) {
+      node1.next.prev = node2;
+    }
+    node2.next = node1.next;
+    node1.next = node2;
 
-    node2.prev = node1.prev;
-    node1.prev = node2;
+    if (node2 !== this.head) {
+      node2.prev.next = node1;
+    }
+    node1.prev = node2.prev;
+    node2.prev = node1;
+    console.log('swap', node1, node2);
   }
 
-  // increaseOrder(index) {
-  //   if (index < 0 || index >= this.length) {
-  //     return false;
-  //   }
-  //   if (index === 0) {
-  //     return false;
-  //   }
+  increaseOrder(index) {
+    if (index < 0 || index >= this.length) {
+      return false;
+    }
+    if (index === 0) {
+      return false;
+    }
 
-  //   const node1 = this.get(index);
-  //   const node2 = node1.next;
+    const node1 = this.get(index);
+    console.log(node1);
+    const node2 = node1.prev;
 
-  //   this.swap(node1, node2);
+    this.swap(node1, node2);
 
-  //   node1?.position -= 1;
-  //   node2?.position += 1;
+    node1.position -= 1;
+    node2.position += 1;
 
-  //   if (this.head === node1) {
-  //     this.head = node2;
-  //   }
+    if (this.head === node2) {
+      this.head = node1;
+    }
+    if (this.tail === node1) {
+      this.tail = node2;
+    }
 
-  //   return this;
-  // }
+    return this;
+  }
 
   decreaseOrder(index) {
     if (index < 0 || index >= this.length) {
@@ -204,18 +243,40 @@ class DoublyLinkedList {
     if (!node1) {
       return false;
     }
-    const node2: ListItemNodeType = node1.next;
+    const node2 = node1.next;
 
-    this.swap(node1, node2);
+    this.swap(node2, node1);
 
     node1.position += 1;
     node2.position -= 1;
 
-    if (node2 === this.tail) {
+    if (node1 === this.head) {
+      this.head = node2;
+    }
+
+    if (this.tail === node2) {
       this.tail = node1;
     }
 
     return this;
+  }
+
+  renderComponent(Component) {
+    if (this.head === null || this.tail === null) {
+      return undefined;
+    }
+
+    const arr = [];
+    let temp = this.head;
+
+    while (temp.next) {
+      // ?? || temp === this.tail
+      arr.push(<Component {...temp} />);
+      temp = temp.next;
+    }
+
+    arr.push(<Component {...this.tail} />);
+    return arr;
   }
 }
 
@@ -233,13 +294,18 @@ const DoublyLinkedListTest = () => {
   newDoublyLinkedList.push('id:6', 6, 'sixth item');
   newDoublyLinkedList.push('id:7', 7, 'seventh item');
   newDoublyLinkedList.push('id:8', 8, 'eighth item');
+
   // console.log(newDoublyLinkedList.pop());
   // console.log(newDoublyLinkedList.shift());
   // console.log(newDoublyLinkedList.getLength());
   // console.log(newDoublyLinkedList.get(6)); // double check get()
-  console.log(newDoublyLinkedList.update(0, 'updated first item'));
-  console.log(newDoublyLinkedList.update(6, 'updated seventh item'));
-
+  // console.log(newDoublyLinkedList.update(0, 'updated first item'));
+  // console.log(newDoublyLinkedList.update(6, 'updated seventh item'));
+  // console.log(newDoublyLinkedList.remove(0));
+  // console.log(newDoublyLinkedList.remove(5));
+  // console.log(newDoublyLinkedList.remove(5));
+  console.log(newDoublyLinkedList.decreaseOrder(0)); // need pront list method think its working
+  console.log(newDoublyLinkedList.print());
   console.log(newDoublyLinkedList);
   console.log(
     'doubly linked list end *****************************************************************************'
