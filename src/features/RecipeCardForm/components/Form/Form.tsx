@@ -5,6 +5,7 @@ import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
 import FormList from '../FormList/FormList';
 import FormModal from '../FormModal/FormModal';
+import FormModalDLL from '../FormModal/FormModalDLL';
 
 import {
   type FormStateType,
@@ -122,7 +123,12 @@ const Form = () => {
   return (
     <>
       {/* when clcik edit on list items need to show modal and pass list item state to it */}
-      <FormModal
+      {/* <FormModal
+        ref={formRef}
+        listItemState={listItemState.ingredients.listItems}
+        setListItemState={testSetFunc}
+      /> */}
+      <FormModalDLL
         ref={formRef}
         listItemState={listItemState.ingredients.listItems}
         setListItemState={testSetFunc}

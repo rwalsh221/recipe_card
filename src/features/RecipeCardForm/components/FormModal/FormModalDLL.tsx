@@ -23,7 +23,7 @@ type FormModalState = {
   };
 };
 
-const FormModal = ({
+const FormModalDLL = ({
   ref,
   listItemState,
   setListItemState,
@@ -34,30 +34,17 @@ const FormModal = ({
   //  needs to rearrange order ***** will need to change listItem satte and add order key + id
   // list item state needs to change to a object each with id
 
-  const [formModalStateDLL, setFormModalStateDLL] = useState(
-    new DoublyLinkedList()
-  );
-
-  console.log(
-    'render modal **************************************************************'
-  );
-
-  console.log(formModalStateDLL);
-
   const [formModalState, setFormModalState] = useState(() => {
-    const stateObject: FormModalState = {};
+    const newDoublyLinkedList = new DoublyLinkedList();
 
-    listItemState.forEach((el, index) => {
-      stateObject[el.id] = {
-        id: el.id,
-        position: el.position,
-        prevValue: el.content,
-        currValue: el.content,
-      };
+    listItemState.forEach((el) => {
+      newDoublyLinkedList.push(el.id, el.position, el.content);
     });
-    console.log(stateObject);
-    return stateObject;
+    console.log(newDoublyLinkedList);
+    return newDoublyLinkedList;
   });
+
+  console.log(formModalState);
 
   useEffect(() => {
     if (modalRef.current) {
@@ -70,26 +57,22 @@ const FormModal = ({
 
   console.log(formModalState);
 
-  const changeInputHandler = (
-    key: keyof FormStateType,
-    value: string
-  ): void => {
-    const formModalStateCopy = { ...formModalState };
-    formModalStateCopy[key].currValue = value;
-    setFormModalState({ ...formModalStateCopy });
+  const changeInputHandler = (id: string, value: string): void => {
+    setFormModalState((formModalState.getNodeById(id).currContent = value));
+    console.log(formModalState);
   };
 
-  const resetInputHandler = (key) => {
-    const formModalStateCopy = { ...formModalState };
-    formModalStateCopy[key].currValue = formModalState[key].prevValue;
-    setFormModalState({ ...formModalStateCopy });
-  };
+  //   const resetInputHandler = (key) => {
+  //     const formModalStateCopy = { ...formModalState };
 
-  const updateInputHandler = (el) => {
-    const listItemStateCopy = [...listItemState];
-    listItemStateCopy[el] = formModalState[el].currValue;
-    setListItemState(listItemStateCopy);
-  };
+  //     setFormModalState(formModalStateCopy[key].currValue = formModalState[key].prevValue;);
+  //   };
+
+  //   const updateInputHandler = (el) => {
+  //     const listItemStateCopy = [...listItemState];
+  //     listItemStateCopy[el] = formModalState[el].currValue;
+  //     setListItemState(listItemStateCopy);
+  //   };
 
   const moveUpHandler = (id: string) => {
     // 0 USE  DOUBLY LINKED LIST FOR STATE SO POSTIONS CAN BE EASILY SWAPPED
@@ -112,12 +95,17 @@ const FormModal = ({
       {/* <DoublyLinkedListTest /> */}
       <p>Greetings, one and all!</p>
       <form method="dialog">
-        {Object.keys(formModalState).map((el) => {
+        <FormInput
+          formInputId=":r2:"
+          formInputPlaceHolder="test"
+          inputValue={formModalState.getNodeById(':r2:').currContent}
+          changeInputHandler={changeInputHandler}
+        />
+        {/* {Object.keys(formModalState).map((el) => {
           console.log(formModalState[el]);
           return (
             <div id={formModalState[el].id}>
               {console.log('rtuenrnrnrnrnrnnrr')}
-              {/* <p>{formModalState[el].currValue}</p> */}
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -151,11 +139,11 @@ const FormModal = ({
               </button>
             </div>
           );
-        })}
+        })} */}
         <button onClick={(e) => e.preventDefault()}>OK</button>
       </form>
     </dialog>
   );
 };
 
-export default FormModal;
+export default FormModalDLL;

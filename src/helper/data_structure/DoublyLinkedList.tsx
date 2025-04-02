@@ -147,6 +147,21 @@ class DoublyLinkedList {
     return temp;
   }
 
+  getNodeById(id: string) {
+    if (this.head === null || this.tail === null) {
+      return false;
+    }
+
+    let temp = this.head;
+    while (temp.id !== id) {
+      console.log('while **************************************************');
+      console.log(id, temp.id);
+      temp = temp.next;
+    }
+
+    return temp;
+  }
+
   update(index: number, content: string) {
     const nodeAtIndex = this.get(index);
 
@@ -280,6 +295,8 @@ class DoublyLinkedList {
   }
 }
 
+export default DoublyLinkedList;
+
 const DoublyLinkedListTest = () => {
   console.log(
     'doubly linked list start *****************************************************************************'
@@ -313,5 +330,5 @@ const DoublyLinkedListTest = () => {
   return <div></div>;
 };
 
-export default DoublyLinkedListTest;
+// export default DoublyLinkedListTest;
 // export default DoublyLinkedList;
