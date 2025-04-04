@@ -3,6 +3,7 @@ import styles from './FormModal.module.css';
 import DoublyLinkedList from '../../../../helper/data_structure/DoublyLinkedList';
 import FormInput from '../FormInput/FormInput';
 import { useState, useRef, useEffect } from 'react';
+import useTest from '../../../../helper/data_structure/test';
 
 import {
   type ListItemStateType,
@@ -44,7 +45,11 @@ const FormModalDLL = ({
     return newDoublyLinkedList;
   });
 
-  console.log(formModalState);
+  console.log(
+    'render ***************************************************************************************'
+  );
+
+  const testTest = new useTest();
 
   useEffect(() => {
     if (modalRef.current) {
@@ -140,7 +145,14 @@ const FormModalDLL = ({
             </div>
           );
         })} */}
-        <button onClick={(e) => e.preventDefault()}>OK</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            testTest.changeTest();
+          }}
+        >
+          OK
+        </button>
       </form>
     </dialog>
   );
