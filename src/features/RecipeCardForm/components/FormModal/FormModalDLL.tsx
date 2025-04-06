@@ -4,6 +4,7 @@ import DoublyLinkedList from '../../../../helper/data_structure/DoublyLinkedList
 import FormInput from '../FormInput/FormInput';
 import { useState, useRef, useEffect } from 'react';
 import useTest from '../../../../helper/data_structure/test';
+import useDoublyLinkedList from '../../hooks/useDoublyLinkedList';
 
 import {
   type ListItemStateType,
@@ -50,6 +51,9 @@ const FormModalDLL = ({
   );
 
   const testTest = new useTest();
+
+  const useDLL = new useDoublyLinkedList();
+  console.log(useDLL);
 
   useEffect(() => {
     if (modalRef.current) {
@@ -106,6 +110,11 @@ const FormModalDLL = ({
           inputValue={formModalState.getNodeById(':r2:').currContent}
           changeInputHandler={changeInputHandler}
         />
+        {useDLL.returnDll() ? (
+          <p>{Object.keys(useDLL.returnDll())}</p>
+        ) : (
+          <p>empty</p>
+        )}
         {/* {Object.keys(formModalState).map((el) => {
           console.log(formModalState[el]);
           return (
@@ -148,7 +157,7 @@ const FormModalDLL = ({
         <button
           onClick={(e) => {
             e.preventDefault();
-            testTest.changeTest();
+            console.log(useDLL.push('test:1', 1, 'first Item'));
           }}
         >
           OK
