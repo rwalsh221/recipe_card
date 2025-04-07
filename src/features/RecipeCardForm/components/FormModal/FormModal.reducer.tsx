@@ -11,6 +11,7 @@ type FormModalState = {
   head: ListItemNodeType | null;
   tail: ListItemNodeType | null;
   length: number;
+  return?: ListItemNodeType;
 };
 
 type FormModalReducerAction = {
@@ -28,7 +29,7 @@ type FormModalReducerAction = {
     | 'increaseOrder'
     | 'decreaseOrder'
     | 'renderComponent';
-  payload: {
+  payload?: {
     id: string;
     position: number;
     content: string;
@@ -77,37 +78,47 @@ const FormModalReducer = (
       }
       return arr;
     }
+    // **** PUSH ******************************************************************
     case 'push': {
+      if (!action.payload) {
+        return;
+      }
       const { id, position, content } = action.payload;
       const newNode = new Node(id, position, content);
-      const stateCopy = { ...state };
-      if (stateCopy.head === null || stateCopy.tail === null) {
+      const stateCopy = structuredClone(state);
+      if (!stateCopy.head || !stateCopy.tail) {
         stateCopy.head = newNode;
         stateCopy.tail = newNode;
+        stateCopy.length = 1;
       } else {
         stateCopy.tail.next = newNode;
         newNode.prev = stateCopy.tail;
         stateCopy.tail = newNode;
+        stateCopy.length += 1;
       }
       //   stateCopy.length += 1;
-      return { ...stateCopy, length: (state.length += 1) };
+      console.log(stateCopy);
+      return { ...stateCopy };
     }
+    // **** POP ******************************************************************
     case 'pop': {
-      const stateCopy = { ...state };
-      if (stateCopy.head === null || stateCopy.tail === null) {
-        return undefined;
+      const stateCopy = structuredClone(state);
+      if (!stateCopy.head || !stateCopy.tail) {
+        return { ...stateCopy, return: undefined };
       }
       const temp = stateCopy.tail;
+      console.log(temp.prev);
       if (stateCopy.length === 1) {
         stateCopy.head = null;
         stateCopy.tail = null;
       } else {
         stateCopy.tail = temp.prev;
-        (stateCopy.tail as ListItemNodeType).next = null;
+        console.log(stateCopy.tail);
         temp.prev = null;
+        (stateCopy.tail as ListItemNodeType).next = null;
       }
-      //   this.length -= 1;
-      return { ...stateCopy, length: (state.length -= 1) };
+      stateCopy.length -= 1;
+      return { ...stateCopy, return: temp };
     }
     case 'shift': {
       const stateCopy = { ...state };

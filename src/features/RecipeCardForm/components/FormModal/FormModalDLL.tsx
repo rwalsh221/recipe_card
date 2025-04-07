@@ -2,9 +2,10 @@ import styles from './FormModal.module.css';
 
 import DoublyLinkedList from '../../../../helper/data_structure/DoublyLinkedList';
 import FormInput from '../FormInput/FormInput';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useReducer } from 'react';
 import useTest from '../../../../helper/data_structure/test';
 import useDoublyLinkedList from '../../hooks/useDoublyLinkedList';
+import FormModalReducer from './FormModal.reducer';
 
 import {
   type ListItemStateType,
@@ -50,10 +51,12 @@ const FormModalDLL = ({
     'render ***************************************************************************************'
   );
 
+  const [state, dispatch] = useReducer(FormModalReducer, {});
+
   const testTest = new useTest();
 
   const useDLL = new useDoublyLinkedList();
-  console.log(useDLL);
+  console.log(state);
 
   useEffect(() => {
     if (modalRef.current) {
@@ -157,10 +160,59 @@ const FormModalDLL = ({
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log(useDLL.push('test:1', 1, 'first Item'));
+            dispatch({ type: 'pop' });
+            console.log(state);
           }}
         >
-          OK
+          pop
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'push',
+              payload: { id: 'id-1', position: 1, content: 'this is a node' },
+            });
+            console.log(state);
+          }}
+        >
+          push
+        </button>{' '}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'push',
+              payload: { id: 'id-2', position: 2, content: '2 this is a node' },
+            });
+            console.log(state);
+          }}
+        >
+          push2
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'push',
+              payload: { id: 'id-3', position: 3, content: '3 this is a node' },
+            });
+            console.log(state);
+          }}
+        >
+          push3
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'push',
+              payload: { id: 'id-4', position: 4, content: '4 this is a node' },
+            });
+            console.log(state);
+          }}
+        >
+          push4
         </button>
       </form>
     </dialog>
