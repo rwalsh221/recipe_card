@@ -120,10 +120,11 @@ const FormModalReducer = (
       stateCopy.length -= 1;
       return { ...stateCopy, return: temp };
     }
+    // **** Shift ******************************************************************
     case 'shift': {
-      const stateCopy = { ...state };
-      if (stateCopy.head === null || stateCopy.tail === null) {
-        return undefined;
+      const stateCopy = structuredClone(state);
+      if (!stateCopy.head || !stateCopy.tail) {
+        return { ...stateCopy, return: undefined };
       }
       const temp = stateCopy.head;
       if (stateCopy.length === 1) {
@@ -134,8 +135,8 @@ const FormModalReducer = (
         (stateCopy.head as ListItemNodeType).prev = null;
         temp.next = null;
       }
-      //   this.length -= 1;
-      return { ...stateCopy, length: (state.length += 1) };
+      stateCopy.length -= 1;
+      return { ...stateCopy, return: temp };
     }
     default:
       return state;

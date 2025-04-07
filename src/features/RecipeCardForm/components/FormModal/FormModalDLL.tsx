@@ -213,6 +213,17 @@ const FormModalDLL = ({
           }}
         >
           push4
+        </button>{' '}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'shift',
+            });
+            console.log(state);
+          }}
+        >
+          shift
         </button>
       </form>
     </dialog>
