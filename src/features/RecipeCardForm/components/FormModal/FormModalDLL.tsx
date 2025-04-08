@@ -171,7 +171,9 @@ const FormModalDLL = ({
             e.preventDefault();
             dispatch({
               type: 'push',
-              payload: { id: 'id-1', position: 1, content: 'this is a node' },
+              payload: {
+                node: { id: 'id-1', position: 1, content: 'this is a node' },
+              },
             });
             console.log(state);
           }}
@@ -183,7 +185,9 @@ const FormModalDLL = ({
             e.preventDefault();
             dispatch({
               type: 'push',
-              payload: { id: 'id-2', position: 2, content: '2 this is a node' },
+              payload: {
+                node: { id: 'id-2', position: 2, content: '2 this is a node' },
+              },
             });
             console.log(state);
           }}
@@ -195,7 +199,9 @@ const FormModalDLL = ({
             e.preventDefault();
             dispatch({
               type: 'push',
-              payload: { id: 'id-3', position: 3, content: '3 this is a node' },
+              payload: {
+                node: { id: 'id-3', position: 3, content: '3 this is a node' },
+              },
             });
             console.log(state);
           }}
@@ -207,7 +213,9 @@ const FormModalDLL = ({
             e.preventDefault();
             dispatch({
               type: 'push',
-              payload: { id: 'id-4', position: 4, content: '4 this is a node' },
+              payload: {
+                node: { id: 'id-4', position: 4, content: '4 this is a node' },
+              },
             });
             console.log(state);
           }}
@@ -224,6 +232,42 @@ const FormModalDLL = ({
           }}
         >
           shift
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'get',
+              payload: { index: 3 },
+            });
+            console.log(state);
+          }}
+        >
+          get
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'update',
+              payload: { index: 3, updateContent: 'THIS HAS BEEN UPDATED' },
+            });
+            console.log(state);
+          }}
+        >
+          update
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'remove',
+              payload: { index: 1 },
+            });
+            console.log(state);
+          }}
+        >
+          update
         </button>
       </form>
     </dialog>
