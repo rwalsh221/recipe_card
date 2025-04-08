@@ -64,33 +64,33 @@ const FormModalReducer = (
 ) => {
   const { type } = action;
 
-  const getNode = (index: number) => {
+  const getNode = (index: number, inputState: FormModalState = state) => {
     console.log(index);
-    if (state.head === null || state.tail === null) {
+    if (inputState.head === null || inputState.tail === null) {
       return undefined;
     }
-    if (index < 0 || index >= state.length) {
+    if (index < 0 || index >= inputState.length) {
       return undefined;
     }
     if (index === 0) {
-      return state.head;
+      return inputState.head;
     }
-    if (index === state.length - 1) {
-      return state.tail;
+    if (index === inputState.length - 1) {
+      return inputState.tail;
     }
 
-    const mid = Math.floor(state.length / 2);
+    const mid = Math.floor(inputState.length / 2);
     console.log(mid);
     let temp: ListItemNodeType;
     if (index <= mid) {
-      temp = state.head;
+      temp = inputState.head;
       for (let i = 0; i < index; i++) {
         console.log(temp);
         temp = temp.next as ListItemNodeType;
       }
     } else {
-      temp = state.tail;
-      for (let i = state.length - 1; i > index; i--) {
+      temp = inputState.tail;
+      for (let i = inputState.length - 1; i > index; i--) {
         temp = temp.prev as ListItemNodeType;
       }
     }
@@ -230,14 +230,14 @@ const FormModalReducer = (
         return { ...updatedState };
       }
 
-      const pre = getNode(index - 1);
-
+      const pre = getNode(index - 1, stateCopy);
+      console.log(pre);
       if (!pre) {
         return { state, return: undefined };
       }
 
       const temp = pre.next as ListItemNodeType;
-
+      console.log(temp);
       pre.next = temp.next;
       (temp.next as ListItemNodeType).prev = pre;
 
