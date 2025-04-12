@@ -26,6 +26,10 @@ type FormModalState = {
   };
 };
 
+const Test = () => {
+  return <p>test</p>;
+};
+
 const FormModalDLL = ({
   ref,
   listItemState,
@@ -54,6 +58,28 @@ const FormModalDLL = ({
   const [state, dispatch] = useReducer(FormModalReducer, {});
 
   const testTest = new useTest();
+
+  const renderComponent = (Component) => {
+    if (!state.head || !state.tail) {
+      return undefined;
+    }
+
+    const arr = [];
+    let temp = state.head;
+
+    while (temp.next) {
+      // ?? || temp === state.tail
+      arr.push(<Component {...temp} />);
+      temp = temp.next;
+    }
+
+    arr.push(<Component {...state.tail} />);
+    return arr;
+  };
+
+  const tc = [<Test />];
+
+  console.log(tc);
 
   const useDLL = new useDoublyLinkedList();
   console.log(state);
@@ -295,6 +321,7 @@ const FormModalDLL = ({
         >
           decreaseOrder
         </button>
+        {renderComponent(Test)}
       </form>
     </dialog>
   );

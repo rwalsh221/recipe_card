@@ -68,6 +68,24 @@ const FormModal = ({
 
   const modalRef = useRef();
 
+  const renderComponent = (Component:<i>) => {
+    if (!state.head || !state.tail) {
+      return undefined;
+    }
+
+    const arr = [];
+    let temp = state.head;
+
+    while (temp.next) {
+      // ?? || temp === state.tail
+      arr.push(<Component {...temp} />);
+      temp = temp.next;
+    }
+
+    arr.push(<Component {...state.tail} />);
+    return arr;
+  };
+
   console.log(formModalState);
 
   const changeInputHandler = (

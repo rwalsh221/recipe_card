@@ -176,6 +176,7 @@ const FormModalReducer = (
       if (!action.payload?.node) {
         return;
       }
+
       const { id, position, content } = action.payload.node;
       const newNode = new Node(id, position, content);
       const stateCopy = structuredClone(state);
