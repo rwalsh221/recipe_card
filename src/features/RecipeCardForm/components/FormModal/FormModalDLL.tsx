@@ -269,6 +269,32 @@ const FormModalDLL = ({
         >
           update
         </button>
+        {''}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'increaseOrder',
+              payload: { index: 1 },
+            });
+            console.log(state);
+          }}
+        >
+          increaseOrder
+        </button>
+        {''}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'decreaseOrder',
+              payload: { index: 3 },
+            });
+            console.log(state);
+          }}
+        >
+          decreaseOrder
+        </button>
       </form>
     </dialog>
   );
