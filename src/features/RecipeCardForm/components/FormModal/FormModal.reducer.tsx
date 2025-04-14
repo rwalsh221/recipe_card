@@ -13,10 +13,12 @@ type FormModalState = {
   length: number;
   return?: ListItemNodeType | boolean;
   cachedNode?: ListItemNodeType;
+  nodeArr?: ListItemNodeType[];
 };
 
 type FormModalReducerAction = {
   type:
+    | 'init'
     | 'print'
     | 'push'
     | 'pop'
@@ -29,13 +31,15 @@ type FormModalReducerAction = {
     | 'swap'
     | 'increaseOrder'
     | 'decreaseOrder'
-    | 'renderComponent';
+    | 'renderComponent'
+    | 'returnNodes';
   payload?: {
     node?: {
       id: string;
       position: number;
       content: string;
     };
+    initArr?: { id: string; position: number; content: string }[];
     updateContent?: string;
     index?: number;
   };
@@ -96,6 +100,27 @@ const FormModalReducer = (
     return temp;
   };
 
+  const push = (
+    node: { id: string; position: number; content: string },
+    stateCopy: FormModalState
+  ) => {
+    const { id, position, content } = node;
+    const newNode = new Node(id, position, content);
+    if (!stateCopy.head || !stateCopy.tail) {
+      stateCopy.head = newNode;
+      stateCopy.tail = newNode;
+      stateCopy.length = 1;
+    } else {
+      stateCopy.tail.next = newNode;
+      newNode.prev = stateCopy.tail;
+      stateCopy.tail = newNode;
+      stateCopy.length += 1;
+    }
+    //   stateCopy.length += 1;
+
+    return { ...stateCopy };
+  };
+
   const pop = () => {
     const stateCopy = structuredClone(state);
     if (!stateCopy.head || !stateCopy.tail) {
@@ -152,7 +177,35 @@ const FormModalReducer = (
     node2.prev = node1;
   };
 
+  const returnNodes = (stateCopy) => {
+    const nodeArr: ListItemNodeType[] = [];
+    if (!stateCopy.head || !stateCopy.tail) {
+      return nodeArr;
+    }
+
+    let temp = stateCopy.head;
+    while (temp) {
+      nodeArr.push(temp);
+      temp = temp.next;
+    }
+
+    return nodeArr;
+  };
+
   switch (type) {
+    case 'init': {
+      if (!action.payload?.initArr) {
+        return { ...state };
+      }
+
+      let updatedState: FormModalState = { head: null, tail: null, length: 0 };
+
+      action.payload.initArr.forEach(
+        (el) => (updatedState = push(el, updatedState))
+      );
+
+      return { ...updatedState, nodeArr: returnNodes(updatedState) };
+    }
     case 'print': {
       if (state.head === null || state.tail === null) {
         return undefined;
@@ -173,36 +226,22 @@ const FormModalReducer = (
     }
     // **** PUSH ******************************************************************
     case 'push': {
-      if (!action.payload?.node) {
-        return;
-      }
-
-      const { id, position, content } = action.payload.node;
-      const newNode = new Node(id, position, content);
       const stateCopy = structuredClone(state);
-      if (!stateCopy.head || !stateCopy.tail) {
-        stateCopy.head = newNode;
-        stateCopy.tail = newNode;
-        stateCopy.length = 1;
-      } else {
-        stateCopy.tail.next = newNode;
-        newNode.prev = stateCopy.tail;
-        stateCopy.tail = newNode;
-        stateCopy.length += 1;
+      if (!action.payload?.node) {
+        return { ...stateCopy, return: false };
       }
-      //   stateCopy.length += 1;
-
-      return { ...stateCopy };
+      const updatedState = push(action.payload.node, stateCopy);
+      return { ...updatedState, nodeArr: returnNodes(updatedState) };
     }
     // **** POP ******************************************************************
     case 'pop': {
       const updatedState = pop();
-      return { ...updatedState };
+      return { ...updatedState, nodeArr: returnNodes(updatedState) };
     }
     // **** Shift ******************************************************************
     case 'shift': {
       const updatedState = shift();
-      return { ...updatedState };
+      return { ...updatedState, nodeArr: returnNodes(updatedState) };
     }
     case 'get': {
       if (action.payload?.index === undefined) {
@@ -214,19 +253,20 @@ const FormModalReducer = (
     // **** UPDATE ******************************************************************
     case 'update': {
       // need to chace node
+      const stateCopy = structuredClone(state);
       if (
         action.payload?.index === undefined ||
         action.payload.updateContent === undefined
       ) {
         return { ...state, return: undefined };
       }
-      const nodeAtIndex = getNode(action.payload.index);
+      const nodeAtIndex = getNode(action.payload.index, stateCopy);
 
       if (nodeAtIndex) {
         nodeAtIndex.currContent = action.payload?.updateContent;
-        return { ...state, return: true };
+        return { ...stateCopy, return: true, nodeArr: returnNodes(stateCopy) };
       }
-      return { ...state, return: false };
+      return { ...stateCopy, return: false };
     }
     // **** REMOVE ******************************************************************
     case 'remove': {
@@ -266,7 +306,7 @@ const FormModalReducer = (
 
       stateCopy.length -= 1;
 
-      return { ...stateCopy, return: temp };
+      return { ...stateCopy, return: temp, nodeArr: returnNodes(stateCopy) };
     }
     // **** INCREASE ORDER ******************************************************************
     case 'increaseOrder': {
@@ -304,7 +344,7 @@ const FormModalReducer = (
         stateCopy.tail = node2;
       }
 
-      return { ...stateCopy, return: true };
+      return { ...stateCopy, return: true, nodeArr: returnNodes(stateCopy) };
     }
     // **** DECREASE ORDER ******************************************************************
     case 'decreaseOrder': {
@@ -341,7 +381,20 @@ const FormModalReducer = (
         stateCopy.tail = node1;
       }
 
-      return { ...stateCopy, return: true };
+      return { ...stateCopy, return: true, nodeArr: returnNodes(stateCopy) };
+    }
+    case 'returnNodes': {
+      if (!state.head || !state.tail) {
+        return { ...state, nodeArr: null };
+      }
+      const nodeArr = [];
+      let temp = state.head;
+      while (temp) {
+        nodeArr.push(temp);
+        temp = temp.next;
+      }
+
+      return { ...state, nodeArr: nodeArr };
     }
     default:
       return state;

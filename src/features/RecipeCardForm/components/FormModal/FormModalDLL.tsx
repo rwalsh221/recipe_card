@@ -83,13 +83,15 @@ const FormModalDLL = ({
 
   const useDLL = new useDoublyLinkedList();
   console.log(state);
+  console.log(listItemState);
 
   useEffect(() => {
     if (modalRef.current) {
       console.log(modalRef.current);
       modalRef.current.showModal();
     }
-  }, []);
+    dispatch({ type: 'init', payload: { initArr: listItemState } });
+  }, [listItemState]);
 
   const modalRef = useRef();
 
@@ -293,7 +295,7 @@ const FormModalDLL = ({
             console.log(state);
           }}
         >
-          update
+          remove
         </button>
         {''}
         <button
@@ -321,6 +323,18 @@ const FormModalDLL = ({
         >
           decreaseOrder
         </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch({
+              type: 'returnNodes',
+            });
+            console.log(state);
+          }}
+        >
+          return nodes
+        </button>
+        {state.nodeArr && state.nodeArr.map((el) => <p>{el.id}</p>)}
         {renderComponent(Test)}
       </form>
     </dialog>

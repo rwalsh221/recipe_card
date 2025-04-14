@@ -38,10 +38,6 @@ const FormModal = ({
     new DoublyLinkedList()
   );
 
-  console.log(
-    'render modal **************************************************************'
-  );
-
   console.log(formModalStateDLL);
 
   const [formModalState, setFormModalState] = useState(() => {
