@@ -30,9 +30,7 @@ type FormModalReducerAction = {
     | 'remove'
     | 'swap'
     | 'increaseOrder'
-    | 'decreaseOrder'
-    | 'renderComponent'
-    | 'returnNodes';
+    | 'decreaseOrder';
   payload?: {
     node?: {
       id: string;
@@ -177,13 +175,13 @@ const FormModalReducer = (
     node2.prev = node1;
   };
 
-  const returnNodes = (stateCopy) => {
+  const returnNodes = (stateCopy: FormModalState) => {
     const nodeArr: ListItemNodeType[] = [];
     if (!stateCopy.head || !stateCopy.tail) {
       return nodeArr;
     }
 
-    let temp = stateCopy.head;
+    let temp: ListItemNodeType | null = stateCopy.head;
     while (temp) {
       nodeArr.push(temp);
       temp = temp.next;
@@ -193,6 +191,7 @@ const FormModalReducer = (
   };
 
   switch (type) {
+    // **** INIT ******************************************************************
     case 'init': {
       if (!action.payload?.initArr) {
         return { ...state };
@@ -383,19 +382,7 @@ const FormModalReducer = (
 
       return { ...stateCopy, return: true, nodeArr: returnNodes(stateCopy) };
     }
-    case 'returnNodes': {
-      if (!state.head || !state.tail) {
-        return { ...state, nodeArr: null };
-      }
-      const nodeArr = [];
-      let temp = state.head;
-      while (temp) {
-        nodeArr.push(temp);
-        temp = temp.next;
-      }
 
-      return { ...state, nodeArr: nodeArr };
-    }
     default:
       return state;
   }
