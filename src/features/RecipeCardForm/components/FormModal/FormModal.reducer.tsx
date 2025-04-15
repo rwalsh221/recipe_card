@@ -103,7 +103,7 @@ const FormModalReducer = (
     return temp;
   };
 
-  const getNodeById = (nodeId, stateCopy) => {
+  const getNodeById = (nodeId: string, stateCopy: FormModalState) => {
     if (!nodeId) {
       return false;
     }
@@ -222,13 +222,18 @@ const FormModalReducer = (
         return { ...state };
       }
 
-      let updatedState: FormModalState = { head: null, tail: null, length: 0 };
+      let initialState: FormModalState = {
+        head: null,
+        tail: null,
+        length: 0,
+        nodeArr: [],
+      };
 
       action.payload.initArr.forEach(
-        (el) => (updatedState = push(el, updatedState))
+        (el) => (initialState = push(el, initialState))
       );
 
-      return { ...updatedState, nodeArr: returnNodes(updatedState) };
+      return { ...initialState, nodeArr: returnNodes(initialState) };
     }
     case 'print': {
       if (state.head === null || state.tail === null) {
