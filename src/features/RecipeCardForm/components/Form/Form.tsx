@@ -123,16 +123,16 @@ const Form = () => {
   return (
     <>
       {/* when clcik edit on list items need to show modal and pass list item state to it */}
-      {/* <FormModal
-        ref={formRef}
-        listItemState={listItemState.ingredients.listItems}
-        setListItemState={testSetFunc}
-      /> */}
-      <FormModalDLL
+      <FormModal
         ref={formRef}
         listItemState={listItemState.ingredients.listItems}
         setListItemState={testSetFunc}
       />
+      {/* <FormModalDLL
+        ref={formRef}
+        listItemState={listItemState.ingredients.listItems}
+        setListItemState={testSetFunc}
+      /> */}
       <form>
         {/* FRONT */}
         <div className={styles.formBasicInfo}>

@@ -1,8 +1,9 @@
 import styles from './FormModal.module.css';
 
-import DoublyLinkedList from '../../../../helper/data_structure/DoublyLinkedList';
+import FormModalReducer from './FormModal.reducer';
+// import DoublyLinkedList from '../../../../helper/data_structure/DoublyLinkedList';
 import FormInput from '../FormInput/FormInput';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useReducer } from 'react';
 
 import {
   type ListItemStateType,
@@ -34,138 +35,152 @@ const FormModal = ({
   //  needs to rearrange order ***** will need to change listItem satte and add order key + id
   // list item state needs to change to a object each with id
 
-  const [formModalStateDLL, setFormModalStateDLL] = useState(
-    new DoublyLinkedList()
-  );
+  // const [formModalStateDLL, setFormModalStateDLL] = useState(
+  //   new DoublyLinkedList()
+  // );
 
-  console.log(formModalStateDLL);
+  // console.log(formModalStateDLL);
 
-  const [formModalState, setFormModalState] = useState(() => {
-    const stateObject: FormModalState = {};
+  // const [formModalState, setFormModalState] = useState(() => {
+  //   const stateObject: FormModalState = {};
 
-    listItemState.forEach((el, index) => {
-      stateObject[el.id] = {
-        id: el.id,
-        position: el.position,
-        prevValue: el.content,
-        currValue: el.content,
-      };
-    });
-    console.log(stateObject);
-    return stateObject;
-  });
+  //   listItemState.forEach((el, index) => {
+  //     stateObject[el.id] = {
+  //       id: el.id,
+  //       position: el.position,
+  //       prevValue: el.content,
+  //       currValue: el.content,
+  //     };
+  //   });
+  //   console.log(stateObject);
+  //   return stateObject;
+  // });
+
+  const [state, dispatch] = useReducer(FormModalReducer, {});
 
   useEffect(() => {
+    console.log('useeueueueuueueeeeeee');
     if (modalRef.current) {
       console.log(modalRef.current);
       modalRef.current.showModal();
     }
-  }, []);
 
+    dispatch({ type: 'init', payload: { initArr: listItemState } });
+  }, [listItemState]);
   const modalRef = useRef();
 
-  const renderComponent = (Component:<i>) => {
-    if (!state.head || !state.tail) {
-      return undefined;
-    }
+  console.log(listItemState);
 
-    const arr = [];
-    let temp = state.head;
+  // const renderComponent = (Component:<i>) => {
+  //   if (!state.head || !state.tail) {
+  //     return undefined;
+  //   }
 
-    while (temp.next) {
-      // ?? || temp === state.tail
-      arr.push(<Component {...temp} />);
-      temp = temp.next;
-    }
+  //   const arr = [];
+  //   let temp = state.head;
 
-    arr.push(<Component {...state.tail} />);
-    return arr;
-  };
+  //   while (temp.next) {
+  //     // ?? || temp === state.tail
+  //     arr.push(<Component {...temp} />);
+  //     temp = temp.next;
+  //   }
 
-  console.log(formModalState);
+  //   arr.push(<Component {...state.tail} />);
+  //   return arr;
+  // };
 
-  const changeInputHandler = (
-    key: keyof FormStateType,
-    value: string
-  ): void => {
-    const formModalStateCopy = { ...formModalState };
-    formModalStateCopy[key].currValue = value;
-    setFormModalState({ ...formModalStateCopy });
-  };
+  // const changeInputHandler = (
+  //   key: keyof FormStateType,
+  //   value: string
+  // ): void => {
+  //   const formModalStateCopy = { ...formModalState };
+  //   formModalStateCopy[key].currValue = value;
+  //   setFormModalState({ ...formModalStateCopy });
+  // };
 
-  const resetInputHandler = (key) => {
-    const formModalStateCopy = { ...formModalState };
-    formModalStateCopy[key].currValue = formModalState[key].prevValue;
-    setFormModalState({ ...formModalStateCopy });
-  };
+  // const resetInputHandler = (key) => {
+  //   const formModalStateCopy = { ...formModalState };
+  //   formModalStateCopy[key].currValue = formModalState[key].prevValue;
+  //   setFormModalState({ ...formModalStateCopy });
+  // };
 
-  const updateInputHandler = (el) => {
-    const listItemStateCopy = [...listItemState];
-    listItemStateCopy[el] = formModalState[el].currValue;
-    setListItemState(listItemStateCopy);
-  };
+  // const updateInputHandler = (el) => {
+  //   const listItemStateCopy = [...listItemState];
+  //   listItemStateCopy[el] = formModalState[el].currValue;
+  //   setListItemState(listItemStateCopy);
+  // };
 
-  const moveUpHandler = (id: string) => {
-    // 0 USE  DOUBLY LINKED LIST FOR STATE SO POSTIONS CAN BE EASILY SWAPPED
+  // const moveUpHandler = (id: string) => {
+  //   // 0 USE  DOUBLY LINKED LIST FOR STATE SO POSTIONS CAN BE EASILY SWAPPED
 
-    // 1 get cuur position form state
-    const activeElement = document.getElementById(id);
-    const activeElementState = formModalState[activeElement?.id];
-    console.log(activeElementState);
-    // 1b get second element
+  //   // 1 get cuur position form state
+  //   const activeElement = document.getElementById(id);
+  //   const activeElementState = formModalState[activeElement?.id];
+  //   console.log(activeElementState);
+  //   // 1b get second element
 
-    // 2 if position === 1 dont show btn or return
-    // 3 get list itme placed above current
-    // 4 swap both elements need animation
-    // 5 update state
-    // ??? should update Form.tsx state whenever modal is closed
-  };
-
+  //   // 2 if position === 1 dont show btn or return
+  //   // 3 get list itme placed above current
+  //   // 4 swap both elements need animation
+  //   // 5 update state
+  //   // ??? should update Form.tsx state whenever modal is closed
+  // };
+  console.log(state);
   return (
     <dialog ref={modalRef} className={styles.formModal}>
-      {/* <DoublyLinkedListTest /> */}
       <p>Greetings, one and all!</p>
       <form method="dialog">
-        {Object.keys(formModalState).map((el) => {
-          console.log(formModalState[el]);
-          return (
-            <div id={formModalState[el].id}>
-              {console.log('rtuenrnrnrnrnrnnrr')}
-              {/* <p>{formModalState[el].currValue}</p> */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  moveUpHandler(formModalState[el].id);
-                }}
-              >
-                up
-              </button>
-              <button>down</button>
-              <FormInput
-                formInputId={el}
-                formInputPlaceholder="test"
-                inputValue={formModalState[el].currValue}
-                changeInputHandler={changeInputHandler}
-              />
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  updateInputHandler(el);
-                }}
-              >
-                save changes
-              </button>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  resetInputHandler(el);
-                }}
-              >
-                undo changes
-              </button>
-            </div>
-          );
-        })}
+        {state.nodeArr &&
+          state.nodeArr.map((el) => {
+            return (
+              <div id={el.id}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch({
+                      type: 'increaseOrder',
+                      payload: { nodeId: el.id },
+                    });
+                  }}
+                >
+                  up
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch({
+                      type: 'decreaseOrder',
+                      payload: { nodeId: el.id },
+                    });
+                  }}
+                >
+                  down
+                </button>
+                <FormInput
+                  formInputId={el.id}
+                  formInputPlaceholder="test"
+                  inputValue={el.currContent}
+                  // changeInputHandler={changeInputHandler}
+                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // updateInputHandler(el);
+                  }}
+                >
+                  save changes
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // resetInputHandler(el);
+                  }}
+                >
+                  undo changes
+                </button>
+              </div>
+            );
+          })}
         <button onClick={(e) => e.preventDefault()}>OK</button>
       </form>
     </dialog>

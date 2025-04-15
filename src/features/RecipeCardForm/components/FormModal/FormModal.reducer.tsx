@@ -13,7 +13,7 @@ type FormModalState = {
   length: number;
   return?: ListItemNodeType | boolean;
   cachedNode?: ListItemNodeType;
-  nodeArr?: ListItemNodeType[];
+  nodeArr: ListItemNodeType[];
 };
 
 type FormModalReducerAction = {
@@ -40,6 +40,7 @@ type FormModalReducerAction = {
     initArr?: { id: string; position: number; content: string }[];
     updateContent?: string;
     index?: number;
+    nodeId?: string;
   };
 };
 
@@ -59,6 +60,10 @@ class Node implements ListItemNodeType {
     this.prev = null;
   }
 }
+
+// NEED RESET CASE
+// NEED SAVE CHNAGES TO PARENT STATE CASE
+// GET BY ID
 
 const FormModalReducer = (
   state: FormModalState,
@@ -93,6 +98,26 @@ const FormModalReducer = (
       for (let i = inputState.length - 1; i > index; i--) {
         temp = temp.prev as ListItemNodeType;
       }
+    }
+
+    return temp;
+  };
+
+  const getNodeById = (nodeId, stateCopy) => {
+    if (!nodeId) {
+      return false;
+    }
+
+    if (stateCopy.head === null || stateCopy.tail === null) {
+      return false;
+    }
+
+    let temp: ListItemNodeType | null = stateCopy.head;
+    while (temp) {
+      if (temp.id === nodeId) {
+        break;
+      }
+      temp = temp.next;
     }
 
     return temp;
@@ -242,12 +267,36 @@ const FormModalReducer = (
       const updatedState = shift();
       return { ...updatedState, nodeArr: returnNodes(updatedState) };
     }
+    // **** GET ******************************************************************
     case 'get': {
       if (action.payload?.index === undefined) {
         return { ...state, return: undefined };
       }
       const node = getNode(action.payload?.index);
       return { ...state, return: node };
+    }
+    // **** GET NODE BY ID ******************************************************************
+    case 'getNodeById': {
+      const stateCopy = structuredClone(state);
+      if (!action.payload?.nodeId) {
+        return { ...stateCopy, return: false };
+      }
+
+      const { nodeId } = action.payload;
+
+      if (stateCopy.head === null || stateCopy.tail === null) {
+        return { ...stateCopy, return: false };
+      }
+
+      let temp: ListItemNodeType | null = stateCopy.head;
+      while (temp) {
+        if (temp.id === nodeId) {
+          break;
+        }
+        temp = temp.next;
+      }
+
+      return { ...stateCopy, return: temp };
     }
     // **** UPDATE ******************************************************************
     case 'update': {
@@ -309,23 +358,20 @@ const FormModalReducer = (
     }
     // **** INCREASE ORDER ******************************************************************
     case 'increaseOrder': {
-      if (action.payload?.index === undefined) {
-        return { ...state, return: undefined };
+      if (!action.payload?.nodeId) {
+        return { ...state, return: false };
       }
-      const { index } = action.payload;
+      const { nodeId } = action.payload;
 
       const stateCopy = structuredClone(state);
 
-      if (index < 0 || index >= stateCopy.length) {
-        return { ...stateCopy, return: false };
-      }
-      if (index === 0) {
-        return { ...stateCopy, return: false };
-      }
-
-      const node1 = getNode(index, stateCopy);
+      const node1 = getNodeById(nodeId, stateCopy);
+      console.log(node1);
 
       if (!node1) {
+        return { ...stateCopy, return: false };
+      }
+      if (node1 === stateCopy.head) {
         return { ...stateCopy, return: false };
       }
 
@@ -347,24 +393,22 @@ const FormModalReducer = (
     }
     // **** DECREASE ORDER ******************************************************************
     case 'decreaseOrder': {
-      if (action.payload?.index === undefined) {
+      if (!action.payload?.nodeId) {
         return { ...state, return: undefined };
       }
-      const { index } = action.payload;
+      const { nodeId } = action.payload;
 
       const stateCopy = structuredClone(state);
 
-      if (index < 0 || index >= stateCopy.length) {
-        return { ...stateCopy, return: false };
-      }
-      if (index === stateCopy.length - 1) {
-        return { ...stateCopy, return: false };
-      }
+      const node1 = getNodeById(nodeId, stateCopy);
 
-      const node1 = getNode(index, stateCopy);
       if (!node1) {
         return { ...stateCopy, return: false };
       }
+      if (node1 === stateCopy.tail) {
+        return { ...stateCopy, return: false };
+      }
+
       const node2 = node1.next as ListItemNodeType;
 
       swapNode(node2, node1, stateCopy);
