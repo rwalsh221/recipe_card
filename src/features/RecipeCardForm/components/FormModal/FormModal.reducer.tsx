@@ -306,18 +306,30 @@ const FormModalReducer = (
     // **** UPDATE ******************************************************************
     case 'update': {
       // need to chace node
+      // need to get node by id
       const stateCopy = structuredClone(state);
       if (
-        action.payload?.index === undefined ||
+        action.payload?.nodeId === undefined ||
         action.payload.updateContent === undefined
       ) {
         return { ...state, return: undefined };
       }
-      const nodeAtIndex = getNode(action.payload.index, stateCopy);
+
+      if (stateCopy.cachedNode?.id === action.payload.nodeId) {
+        stateCopy.cachedNode.currContent = action.payload.updateContent;
+        return { ...stateCopy };
+      }
+
+      const nodeAtIndex = getNodeById(action.payload.nodeId, stateCopy);
 
       if (nodeAtIndex) {
         nodeAtIndex.currContent = action.payload?.updateContent;
-        return { ...stateCopy, return: true, nodeArr: returnNodes(stateCopy) };
+        return {
+          ...stateCopy,
+          return: true,
+          nodeArr: returnNodes(stateCopy),
+          cachedNode: nodeAtIndex,
+        };
       }
       return { ...stateCopy, return: false };
     }

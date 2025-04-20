@@ -89,14 +89,9 @@ const FormModal = ({
   //   return arr;
   // };
 
-  // const changeInputHandler = (
-  //   key: keyof FormStateType,
-  //   value: string
-  // ): void => {
-  //   const formModalStateCopy = { ...formModalState };
-  //   formModalStateCopy[key].currValue = value;
-  //   setFormModalState({ ...formModalStateCopy });
-  // };
+  const changeInputHandler = (id: string, value: string): void => {
+    dispatch({ type: 'update', payload: { nodeId: id, updateContent: value } });
+  };
 
   // const resetInputHandler = (key) => {
   //   const formModalStateCopy = { ...formModalState };
@@ -160,7 +155,7 @@ const FormModal = ({
                   formInputId={el.id}
                   formInputPlaceholder="test"
                   inputValue={el.currContent}
-                  // changeInputHandler={changeInputHandler}
+                  changeInputHandler={changeInputHandler}
                 />
                 <button
                   onClick={(e) => {
