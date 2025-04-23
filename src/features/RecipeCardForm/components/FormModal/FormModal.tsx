@@ -123,60 +123,66 @@ const FormModal = ({
   console.log(state);
   return (
     <dialog ref={modalRef} className={styles.formModal}>
-      <p>Greetings, one and all!</p>
+      <h2>Edit Steps</h2>
       <form method="dialog">
         {state.nodeArr &&
           state.nodeArr.map((el) => {
             return (
               <div id={el.id}>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch({
-                      type: 'increaseOrder',
-                      payload: { nodeId: el.id },
-                    });
-                  }}
-                >
-                  up
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch({
-                      type: 'decreaseOrder',
-                      payload: { nodeId: el.id },
-                    });
-                  }}
-                >
-                  down
-                </button>
                 <FormInput
                   formInputId={el.id}
                   formInputPlaceholder="test"
                   inputValue={el.currContent}
                   changeInputHandler={changeInputHandler}
                 />
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    // updateInputHandler(el);
-                  }}
-                >
-                  save changes
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    // resetInputHandler(el);
-                  }}
-                >
-                  undo changes
-                </button>
+                <div className={styles.modal_btn_container}>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch({
+                        type: 'increaseOrder',
+                        payload: { nodeId: el.id },
+                      });
+                    }}
+                  >
+                    <img
+                      src="src/assets/svg/caret-up-circle-outline.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch({
+                        type: 'decreaseOrder',
+                        payload: { nodeId: el.id },
+                      });
+                    }}
+                  >
+                    <img
+                      src="src/assets/svg/caret-down-circle-outline.svg"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // resetInputHandler(el);
+                    }}
+                  >
+                    <img
+                      src="src/assets/svg/arrow-undo-circle-outline.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
               </div>
             );
           })}
-        <button onClick={(e) => e.preventDefault()}>OK</button>
+        <div className={styles.modal_btn_container}>
+          <button onClick={(e) => e.preventDefault()}>Save Changes</button>
+          <button onClick={(e) => e.preventDefault()}>Discard Changes</button>
+        </div>
       </form>
     </dialog>
   );

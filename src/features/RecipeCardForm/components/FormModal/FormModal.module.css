@@ -1,9 +1,39 @@
 .formModal {
   width: 60vw;
-  height: 60vw;
+  min-height: 60vh;
+  margin: 0 auto;
+  border: var(--border-500-c2);
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: var(--color-1);
+}
+
+.formModal h2 {
+  text-align: center;
+  font-size: 2rem;
+  text-decoration: underline;
+  color: var(--color-2);
 }
 
 dialog::backdrop {
-  background-color: red;
-  /* opacity: 0.6; */
+  background-color: var(--color-2);
+  opacity: 0.5;
+}
+
+.modal_btn_container {
+  margin: 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.modal_btn_container button {
+  background-color: var(--color-2);
+  height: 30px;
+  width: 30px;
+  border: var(--border-100-c1);
+}
+
+.modal_btn_container button:not(:last-of-type) {
+  margin-right: 0.5rem;
 }
