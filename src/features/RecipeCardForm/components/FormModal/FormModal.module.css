@@ -1,10 +1,11 @@
 .formModal {
   width: 60vw;
-  min-height: 60vh;
-  margin: 0 auto;
+  min-height: max-content;
+  max-height: 60vh;
+  margin: auto;
   border: var(--border-500-c2);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 2rem;
   background-color: var(--color-1);
 }
 
@@ -30,7 +31,8 @@ dialog::backdrop {
 .modal_btn_container button {
   background-color: var(--color-2);
   height: 30px;
-  width: 30px;
+  min-width: 30px;
+  max-width: max-content;
   border: var(--border-100-c1);
 }
 

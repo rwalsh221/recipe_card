@@ -11,9 +11,9 @@ type FormModalState = {
   head: ListItemNodeType | null;
   tail: ListItemNodeType | null;
   length: number;
-  return?: ListItemNodeType | boolean;
+  return?: ListItemNodeType | boolean | null;
   cachedNode?: ListItemNodeType;
-  nodeArr: ListItemNodeType[];
+  nodeArr?: ListItemNodeType[];
 };
 
 type FormModalReducerAction = {
@@ -68,7 +68,7 @@ class Node implements ListItemNodeType {
 const FormModalReducer = (
   state: FormModalState,
   action: FormModalReducerAction
-) => {
+): FormModalState => {
   const { type } = action;
 
   const getNode = (index: number, inputState: FormModalState = state) => {
@@ -235,24 +235,24 @@ const FormModalReducer = (
 
       return { ...initialState, nodeArr: returnNodes(initialState) };
     }
-    case 'print': {
-      if (state.head === null || state.tail === null) {
-        return undefined;
-      }
+    // case 'print': {
+    //   if (state.head === null || state.tail === null) {
+    //     return undefined;
+    //   }
 
-      const arr = [];
-      let temp: ListItemNodeType | null = state.head;
+    //   const arr = [];
+    //   let temp: ListItemNodeType | null = state.head;
 
-      while (temp) {
-        arr.push(
-          `PRE NODE: ${temp.prev ? temp.prev.id : null} :: NODE: ${temp.id}: P${
-            temp.position
-          } :: NEXT NODE: ${temp.next ? temp.next.id : null}`
-        );
-        temp = temp.next;
-      }
-      return arr;
-    }
+    //   while (temp) {
+    //     arr.push(
+    //       `PRE NODE: ${temp.prev ? temp.prev.id : null} :: NODE: ${temp.id}: P${
+    //         temp.position
+    //       } :: NEXT NODE: ${temp.next ? temp.next.id : null}`
+    //     );
+    //     temp = temp.next;
+    //   }
+    //   return arr;
+    // }
     // **** PUSH ******************************************************************
     case 'push': {
       const stateCopy = structuredClone(state);
@@ -358,7 +358,7 @@ const FormModalReducer = (
       const pre = getNode(index - 1, stateCopy);
 
       if (!pre) {
-        return { state, return: undefined };
+        return { ...stateCopy, return: undefined };
       }
 
       const temp = pre.next as ListItemNodeType;
