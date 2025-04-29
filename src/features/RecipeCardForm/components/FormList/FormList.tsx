@@ -37,6 +37,7 @@ const FormList = ({ listItemState, showModalHandler }: FormListProps) => {
       <div className={styles.formListHeader}>
         <h3>{listItemState.title}</h3>
         <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             showModalHandler(listItemState.title);
@@ -46,10 +47,11 @@ const FormList = ({ listItemState, showModalHandler }: FormListProps) => {
         </button>
       </div>
       <ul className={styles.listItemContainer}>
-        {Object.keys(listItemState.listItems).map((el) => (
-          <FormListItem
-            formListItemContent={listItemState.listItems[el].content}
-          />
+        {/* {Object.keys(listItemState.listItems).map((el) => (
+          
+        ))} */}
+        {listItemState.listItems.map((el) => (
+          <FormListItem content={el.content} position={el.position} />
         ))}
         {/* {listItemState.listItems.map((el) => (
           <FormListItem formListItemContent={el} />

@@ -10,8 +10,7 @@ type FormInputListProps = {
   changeInputHandler: (key: FormInputListId, value: string) => void;
   addToListItemState: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    key: FormInputListId,
-    value: string
+    key: FormInputListId
   ) => void;
 };
 
@@ -24,7 +23,7 @@ const FormInputList = ({
   addToListItemState,
 }: FormInputListProps) => {
   return (
-    <div className={styles.formInputListContainer}>
+    <form className={styles.formInputListContainer}>
       <div className={styles.formInputListContainer__inputCtn}>
         <input
           onChange={(e) => {
@@ -42,13 +41,14 @@ const FormInputList = ({
         <button
           disabled={!inputValue}
           onClick={(e) => {
-            addToListItemState(e, formInputListId, inputValue);
+            console.log('click');
+            addToListItemState(e, formInputListId);
           }}
         >
           add
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

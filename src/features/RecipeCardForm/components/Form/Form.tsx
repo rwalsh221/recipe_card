@@ -49,11 +49,7 @@ const Form = () => {
   const [listItemState, setListItemState] = useState<ListItemStateType>({
     ingredients: {
       title: 'ingredients',
-      listItems: [
-        { id: useId(), position: 1, content: 'test1' },
-        { id: useId(), position: 2, content: 'test2' },
-        // 'test',
-      ],
+      listItems: [],
     },
     instructions: {
       title: 'instructions',
@@ -98,11 +94,22 @@ const Form = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     key: keyof ListItemStateType
   ) => {
+    console.log(key);
     e.preventDefault();
     const listItemStateCopy = { ...listItemState };
+    const listItemArr = listItemStateCopy[key].listItems;
+    const id = `id#${Math.floor((listItemArr.length * 1000) / Math.random())}`;
+
+    listItemArr.push({
+      id: id,
+      position: listItemArr.length,
+      content: formState[key],
+    });
+
+    // resets input
     const formStateCopy = { ...formState };
-    listItemStateCopy[key].listItems.push(formStateCopy[key]);
     formStateCopy[key] = '';
+
     setListItemState(listItemStateCopy);
     setFormState(formStateCopy);
   };
@@ -116,13 +123,13 @@ const Form = () => {
   };
 
   const showFormModal = (input) => {
-    formRef.current.dataset.key = input;
+    // formRef.current.dataset.key = input;
     formRef.current.showModal();
   };
 
   return (
     <>
-      {/* when clcik edit on list items need to show modal and pass list item state to it */}
+      {/* when clcik edit on list items need to show modal and pass list item state to it - need show modal state - need useeffect showModal() for backdrop*/}
       <FormModal
         ref={formRef}
         listItemState={listItemState.ingredients.listItems}
@@ -133,9 +140,9 @@ const Form = () => {
         listItemState={listItemState.ingredients.listItems}
         setListItemState={testSetFunc}
       /> */}
-      <form>
+      <div>
         {/* FRONT */}
-        <div className={styles.formBasicInfo}>
+        <form className={styles.formBasicInfo}>
           <h2 className={styles.formSubHeading}>Basic Information:</h2>
           <div className={styles.formBasicInfo__inputContainer}>
             <FormInput
@@ -189,9 +196,30 @@ const Form = () => {
               inputType="text"
             />
           </div>
-        </div>
+        </form>
         {/* NEEDS ADD TO ARRAY */}
-        <div className={styles.formAdditionalInfo__inputContainer}>
+        {Object.keys(listItemState).map((el) => (
+          <div className={styles.formAdditionalInfo__inputContainer}>
+            <h2
+              className={styles.formSubHeading}
+            >{`Add ${listItemState[el].title}:`}</h2>
+            <FormInputList
+              formInputListId={el}
+              changeInputHandler={changeInputHandler}
+              addToListItemState={addToListItemState}
+              inputPlaceHolder={`add ${listItemState[el].title}`}
+              inputValue={formState[el]}
+              inputType="text"
+            />
+            <div className={styles.formListContainer}>
+              <FormList
+                listItemState={listItemState[el]}
+                showModalHandler={showFormModal}
+              />
+            </div>
+          </div>
+        ))}
+        {/* <div className={styles.formAdditionalInfo__inputContainer}>
           <h2 className={styles.formSubHeading}>Add Ingredients:</h2>
           <FormInputList
             formInputListId="ingredients"
@@ -213,11 +241,11 @@ const Form = () => {
             <h2 className={styles.formSubHeading}>Add Instructions:</h2>
             <FormInputList
               formInputListId="instructions"
+              changeInputHandler={changeInputHandler}
+              addToListItemState={addToListItemState}
               inputPlaceHolder="add instruction"
               inputValue={formState.instructions}
               inputType="text"
-              changeInputHandler={changeInputHandler}
-              addToListItemState={addToListItemState}
             />
             <div className={styles.formListContainer}>
               <FormList listItemState={listItemState.instructions} />
@@ -236,10 +264,10 @@ const Form = () => {
             <div className={styles.formListContainer}>
               <FormList listItemState={listItemState.tips} />
             </div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
         <button>CREATE CARD</button>
-      </form>
+      </div>
     </>
   );
 };
