@@ -109,7 +109,7 @@ const Form = () => {
 
     listItemArr.push({
       id: id,
-      position: listItemArr.length,
+      position: listItemArr.length + 1,
       content: formState[key],
     });
 
@@ -147,13 +147,40 @@ const Form = () => {
     setShowFormModalState({ ...showFormModalStateCopy });
   };
 
-  const saveListItemChanges = () => {};
+  const saveListItemChanges = (key, node) => {
+    // console.log(updatedListItems);
+    const listItemStateCopy = structuredClone(listItemState);
+
+    const arr = [];
+
+    if (node) {
+      let temp: ListItemNodeType | null = node;
+
+      while (temp) {
+        arr.push({
+          position: temp.position,
+          content: temp.currContent,
+          id: temp.id,
+        });
+        temp = temp.next;
+      }
+    }
+    listItemStateCopy[key].listItems = arr;
+    // return { ...state, return: dllArray };
+
+    // listItemStateCopy[key].listItems = updatedListItems;
+    console.log(listItemStateCopy);
+
+    setListItemState({ ...listItemStateCopy });
+    closeFormModal();
+  };
 
   return (
     <>
       {/* when clcik edit on list items need to show modal and pass list item state to it - need show modal state - need useeffect showModal() for backdrop*/}
       {showFormModalState.showModal && showFormModalState.listItemState && (
         <FormModal
+          listItemStateKey={showFormModalState.listItemState}
           listItemState={
             listItemState[showFormModalState.listItemState].listItems
           }

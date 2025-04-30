@@ -11,7 +11,7 @@ type FormModalState = {
   head: ListItemNodeType | null;
   tail: ListItemNodeType | null;
   length: number;
-  return?: ListItemNodeType | boolean | null;
+  return?: ListItemNodeType | boolean | ListItemNodeType[] | null;
   cachedNode?: ListItemNodeType;
   nodeArr?: ListItemNodeType[];
 };
@@ -31,6 +31,7 @@ type FormModalReducerAction = {
     | 'swap'
     | 'increaseOrder'
     | 'decreaseOrder';
+
   payload?: {
     node?: {
       id: string;

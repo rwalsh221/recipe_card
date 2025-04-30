@@ -16,6 +16,7 @@ type FormModalProps = {
 
 const FormModal = ({
   ref,
+  listItemStateKey,
   listItemState,
   saveListItemChanges,
   closeFormModal,
@@ -25,11 +26,10 @@ const FormModal = ({
     tail: null,
     length: 0,
   });
-  console.log(listItemState);
+
   const modalRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    console.log('useeueueueuueueeeeeee', listItemState);
     if (modalRef.current) {
       console.log(modalRef.current);
       modalRef.current.showModal();
@@ -38,30 +38,10 @@ const FormModal = ({
     dispatch({ type: 'init', payload: { initArr: listItemState } });
   }, [listItemState]);
 
-  console.log(listItemState);
-  console.log(ref);
-
   const changeInputHandler = (id: string, value: string): void => {
     dispatch({ type: 'update', payload: { nodeId: id, updateContent: value } });
   };
 
-  // const closeModalHandler = (action: 'save' | 'discard') => {
-  //   if (!modalRef) {
-  //     return;
-  //   }
-
-  //   if (action === 'save') {
-  //     modalRef.current?.close();
-  //   }
-  // };
-
-  const saveAndCloseHandler = () => {
-    saveListItemChanges();
-    closeFormModal();
-  };
-
-  console.log(state);
-  console.log(modalRef);
   return (
     <dialog ref={modalRef} className={styles.formModal}>
       <h2>Edit Steps</h2>
@@ -133,7 +113,7 @@ const FormModal = ({
           <button
             onClick={(e) => {
               e.preventDefault();
-              saveAndCloseHandler();
+              saveListItemChanges(listItemStateKey, state.head);
             }}
           >
             Save Changes
