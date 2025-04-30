@@ -14,12 +14,18 @@ type FormModalProps = {
   setListItemState: React.Dispatch<React.SetStateAction<ListItemStateType>>;
 };
 
-const FormModal = ({ ref, listItemState }: FormModalProps) => {
+const FormModal = ({
+  ref,
+  listItemState,
+  saveListItemChanges,
+  closeFormModal,
+}: FormModalProps) => {
   const [state, dispatch] = useReducer(FormModalReducer, {
     head: null,
     tail: null,
     length: 0,
   });
+  console.log(listItemState);
   const modalRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -48,6 +54,11 @@ const FormModal = ({ ref, listItemState }: FormModalProps) => {
   //     modalRef.current?.close();
   //   }
   // };
+
+  const saveAndCloseHandler = () => {
+    saveListItemChanges();
+    closeFormModal();
+  };
 
   console.log(state);
   console.log(modalRef);
@@ -122,7 +133,7 @@ const FormModal = ({ ref, listItemState }: FormModalProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              ref.current?.close();
+              saveAndCloseHandler();
             }}
           >
             Save Changes
@@ -130,7 +141,7 @@ const FormModal = ({ ref, listItemState }: FormModalProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              ref.current?.close();
+              closeFormModal();
             }}
           >
             Discard Changes

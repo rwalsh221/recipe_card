@@ -136,25 +136,31 @@ const Form = () => {
     showFormModalStateCopy.listItemState = listItemStateKey;
 
     setShowFormModalState({ ...showFormModalStateCopy });
-    // formRef.current.dataset.key = input;
-    // formRef.current.showModal();
   };
+
+  const closeFormModal = () => {
+    const showFormModalStateCopy = { ...showFormModalState };
+
+    showFormModalStateCopy.showModal = false;
+    showFormModalStateCopy.listItemState = null;
+
+    setShowFormModalState({ ...showFormModalStateCopy });
+  };
+
+  const saveListItemChanges = () => {};
 
   return (
     <>
       {/* when clcik edit on list items need to show modal and pass list item state to it - need show modal state - need useeffect showModal() for backdrop*/}
-      {showFormModalState.showModal && (
+      {showFormModalState.showModal && showFormModalState.listItemState && (
         <FormModal
-          ref={formRef}
-          listItemState={listItemState.ingredients.listItems}
-          setListItemState={testSetFunc}
+          listItemState={
+            listItemState[showFormModalState.listItemState].listItems
+          }
+          saveListItemChanges={saveListItemChanges}
+          closeFormModal={closeFormModal}
         />
       )}
-      {/* <FormModalDLL
-        ref={formRef}
-        listItemState={listItemState.ingredients.listItems}
-        setListItemState={testSetFunc}
-      /> */}
       <div>
         {/* FRONT */}
         <form className={styles.formBasicInfo}>
