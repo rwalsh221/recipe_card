@@ -38,3 +38,8 @@ export type ListItemStateType = {
   instructions: ListItemStateObject;
   tips: ListItemStateObject;
 };
+
+export type ShowFormModalStateType = {
+  showModal: boolean;
+  listItemState: string | null;
+};

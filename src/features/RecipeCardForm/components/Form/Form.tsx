@@ -10,6 +10,7 @@ import FormModalDLL from '../FormModal/FormModalDLL';
 import {
   type FormStateType,
   type ListItemStateType,
+  type ShowFormModalStateType,
 } from '../../types/RecipeCardFormTypes';
 
 // type FormState = {
@@ -60,6 +61,12 @@ const Form = () => {
       listItems: [],
     },
   });
+
+  const [showFormModalState, setShowFormModalState] =
+    useState<ShowFormModalStateType>({
+      showModal: false,
+      listItemState: null,
+    });
 
   const formRef: React.RefObject<HTMLDialogElement> = useRef();
 
@@ -122,19 +129,27 @@ const Form = () => {
     setListItemState({ ...listItemStateCopy });
   };
 
-  const showFormModal = (input) => {
+  const showFormModal = (listItemStateKey: string) => {
+    const showFormModalStateCopy = { ...showFormModalState };
+
+    showFormModalStateCopy.showModal = true;
+    showFormModalStateCopy.listItemState = listItemStateKey;
+
+    setShowFormModalState({ ...showFormModalStateCopy });
     // formRef.current.dataset.key = input;
-    formRef.current.showModal();
+    // formRef.current.showModal();
   };
 
   return (
     <>
       {/* when clcik edit on list items need to show modal and pass list item state to it - need show modal state - need useeffect showModal() for backdrop*/}
-      <FormModal
-        ref={formRef}
-        listItemState={listItemState.ingredients.listItems}
-        setListItemState={testSetFunc}
-      />
+      {showFormModalState.showModal && (
+        <FormModal
+          ref={formRef}
+          listItemState={listItemState.ingredients.listItems}
+          setListItemState={testSetFunc}
+        />
+      )}
       {/* <FormModalDLL
         ref={formRef}
         listItemState={listItemState.ingredients.listItems}

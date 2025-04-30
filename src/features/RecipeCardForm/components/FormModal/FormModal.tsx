@@ -24,10 +24,10 @@ const FormModal = ({ ref, listItemState }: FormModalProps) => {
 
   useEffect(() => {
     console.log('useeueueueuueueeeeeee', listItemState);
-    // if (modalRef.current) {
-    //   console.log(modalRef.current);
-    //   modalRef.current.showModal();
-    // }
+    if (modalRef.current) {
+      console.log(modalRef.current);
+      modalRef.current.showModal();
+    }
 
     dispatch({ type: 'init', payload: { initArr: listItemState } });
   }, [listItemState]);
@@ -52,7 +52,7 @@ const FormModal = ({ ref, listItemState }: FormModalProps) => {
   console.log(state);
   console.log(modalRef);
   return (
-    <dialog ref={ref} className={styles.formModal}>
+    <dialog ref={modalRef} className={styles.formModal}>
       <h2>Edit Steps</h2>
       <form method="dialog">
         {state.nodeArr &&
