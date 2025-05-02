@@ -217,6 +217,15 @@ const FormModalReducer = (
     return nodeArr;
   };
 
+  const decreaseNodePosition = (node: ListItemNodeType) => {
+    let temp: ListItemNodeType | null = node;
+
+    while (temp) {
+      temp.position = temp.position - 1;
+      temp = temp.next;
+    }
+  };
+
   switch (type) {
     // **** INIT ******************************************************************
     case 'init': {
@@ -337,43 +346,43 @@ const FormModalReducer = (
     }
     // **** REMOVE ******************************************************************
     case 'remove': {
-      if (action.payload?.index === undefined) {
-        return { ...state, return: undefined };
+      if (!action.payload?.nodeId) {
+        return { ...state, return: false };
       }
 
-      const { index } = action.payload;
-
+      const { nodeId } = action.payload;
       const stateCopy = structuredClone(state);
+      const node = getNodeById(nodeId, stateCopy);
 
-      if (index < 0 || index >= stateCopy.length) {
-        return { ...stateCopy, return: undefined };
+      if (!node) {
+        return { ...stateCopy, return: false };
       }
-      if (index === 0) {
+
+      if (node === stateCopy.head) {
         const updatedState = shift();
-        return { ...updatedState };
+
+        if (updatedState.length > 0) {
+          decreaseNodePosition(updatedState.head as ListItemNodeType);
+        }
+
+        return { ...updatedState, nodeArr: returnNodes(updatedState) };
       }
-      if (index === stateCopy.length - 1) {
+      if (node === stateCopy.tail) {
         const updatedState = pop();
-        return { ...updatedState };
+        return { ...updatedState, nodeArr: returnNodes(updatedState) };
       }
 
-      const pre = getNode(index - 1, stateCopy);
+      const preNode = node.prev as ListItemNodeType;
 
-      if (!pre) {
-        return { ...stateCopy, return: undefined };
-      }
+      preNode.next = node.next;
+      (node.next as ListItemNodeType).prev = preNode;
 
-      const temp = pre.next as ListItemNodeType;
+      node.next = null;
+      node.prev = null;
 
-      pre.next = temp.next;
-      (temp.next as ListItemNodeType).prev = pre;
-
-      temp.next = null;
-      temp.prev = null;
-
+      decreaseNodePosition(preNode.next as ListItemNodeType);
       stateCopy.length -= 1;
-
-      return { ...stateCopy, return: temp, nodeArr: returnNodes(stateCopy) };
+      return { ...stateCopy, return: node, nodeArr: returnNodes(stateCopy) };
     }
     // **** INCREASE ORDER ******************************************************************
     case 'increaseOrder': {

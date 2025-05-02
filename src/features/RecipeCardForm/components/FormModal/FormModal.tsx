@@ -102,7 +102,6 @@ const FormModal = ({
                   </button>
                   <button
                     onClick={(e) => {
-                      console.log('remove');
                       e.preventDefault();
                       dispatch({ type: 'remove', payload: { nodeId: el.id } });
                     }}
