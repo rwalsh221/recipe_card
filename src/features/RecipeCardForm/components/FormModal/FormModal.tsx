@@ -89,7 +89,10 @@ const FormModal = ({
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      // resetInputHandler(el);
+                      dispatch({
+                        type: 'undoChanges',
+                        payload: { nodeId: el.id },
+                      });
                     }}
                   >
                     <img
@@ -99,8 +102,9 @@ const FormModal = ({
                   </button>
                   <button
                     onClick={(e) => {
+                      console.log('remove');
                       e.preventDefault();
-                      // resetInputHandler(el);
+                      dispatch({ type: 'remove', payload: { nodeId: el.id } });
                     }}
                   >
                     <img src="src/assets/svg/close-circle-outline.svg" alt="" />

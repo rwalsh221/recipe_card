@@ -30,7 +30,8 @@ type FormModalReducerAction = {
     | 'remove'
     | 'swap'
     | 'increaseOrder'
-    | 'decreaseOrder';
+    | 'decreaseOrder'
+    | 'undoChanges';
 
   payload?: {
     node?: {
@@ -443,6 +444,30 @@ const FormModalReducer = (
       }
 
       return { ...stateCopy, return: true, nodeArr: returnNodes(stateCopy) };
+    }
+    case 'undoChanges': {
+      const stateCopy = structuredClone(state);
+      if (action.payload?.nodeId === undefined) {
+        return { ...state, return: undefined };
+      }
+
+      if (stateCopy.cachedNode?.id === action.payload.nodeId) {
+        stateCopy.cachedNode.currContent = stateCopy.cachedNode.prevContent;
+        return { ...stateCopy };
+      }
+
+      const nodeAtIndex = getNodeById(action.payload.nodeId, stateCopy);
+
+      if (nodeAtIndex) {
+        nodeAtIndex.currContent = nodeAtIndex.prevContent;
+        return {
+          ...stateCopy,
+          return: true,
+          nodeArr: returnNodes(stateCopy),
+          cachedNode: nodeAtIndex,
+        };
+      }
+      return { ...stateCopy, return: false };
     }
 
     default:
