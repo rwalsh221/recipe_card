@@ -1,5 +1,6 @@
 import styles from './Form.module.css';
 import { useState, useRef, useId } from 'react';
+import { useNavigate } from 'react-router';
 
 import FormInput from '../FormInput/FormInput';
 import FormInputList from '../FormInputList/FormInputList';
@@ -69,6 +70,8 @@ const Form = () => {
     });
 
   const formRef: React.RefObject<HTMLDialogElement> = useRef();
+
+  const navigate = useNavigate();
 
   console.log(formRef);
 
@@ -314,7 +317,7 @@ const Form = () => {
             </div>
           </div> */}
         {/* </div> */}
-        <button>CREATE CARD</button>
+        <button onClick={() => navigate('/recipe-card')}>CREATE CARD</button>
       </div>
     </>
   );
