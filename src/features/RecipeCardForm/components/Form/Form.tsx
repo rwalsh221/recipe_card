@@ -317,7 +317,18 @@ const Form = () => {
             </div>
           </div> */}
         {/* </div> */}
-        <button onClick={() => navigate('/recipe-card')}>CREATE CARD</button>
+        <button
+          onClick={() =>
+            navigate('/recipe-card', {
+              state: {
+                formState: { ...formState },
+                listItemState: { ...listItemState },
+              },
+            })
+          }
+        >
+          CREATE CARD
+        </button>
       </div>
     </>
   );
