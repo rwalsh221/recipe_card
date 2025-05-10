@@ -17,7 +17,14 @@ const RecipeCard = () => {
         qrUrl={location.state.formState.url}
         ingredients={location.state.listItemState.ingredients}
       />
-      <RecipeCardBack />
+      <RecipeCardBack
+        serves={location.state.formState.serves}
+        prepTime={location.state.formState.prepTime}
+        bakingTime={location.state.formState.bakingTime}
+        ovenTemp={location.state.formState.ovenTemp}
+        instructions={location.state.listItemState.instructions}
+        tips={location.state.listItemState.tips}
+      />
       <button>chnage side</button>
       <button>print</button>
       <button>edit</button>

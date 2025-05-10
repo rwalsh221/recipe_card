@@ -1,0 +1,21 @@
+.recipe_card_back {
+  margin: 5rem 0;
+  background: #050505;
+  background: radial-gradient(
+    circle,
+    rgba(5, 5, 5, 1) 0%,
+    rgba(49, 50, 54, 1) 100%
+  );
+
+  color: white;
+
+  border: var(--border-500-c1);
+  border: 5px solid white;
+  width: var(--recipe-card-width);
+  height: var(--recipe-card-height);
+
+  display: grid;
+  grid-template-rows: 1fr 2fr 2fr;
+
+  padding: 2rem;
+}
