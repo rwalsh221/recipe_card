@@ -36,7 +36,7 @@ const RecipeCard = () => {
 export default RecipeCard;
 
 // func to remove http://www. from qr url done!!!!
-// fucn to add . to end of uinstructions
+// fucn to add . to end of uinstructions done!!!
 // create own list item marker to maintain formatting
 // add save recipe to local storage
 // add form input to timeings for hour and mins.

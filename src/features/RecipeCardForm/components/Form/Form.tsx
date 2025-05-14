@@ -1,5 +1,5 @@
 import styles from './Form.module.css';
-import { useState, useRef, useId } from 'react';
+import { useState, useRef, useId, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import FormInput from '../FormInput/FormInput';
@@ -74,6 +74,23 @@ const Form = () => {
   const navigate = useNavigate();
 
   console.log(formRef);
+
+  const setLocalStorage = () => {
+    const formStateJson = JSON.stringify(formState);
+    const listItemStateJson = JSON.stringify(listItemState);
+
+    localStorage.setItem('formState', formStateJson);
+    localStorage.setItem('listItemState', listItemStateJson);
+  };
+
+  const getLocalStorage = () => {
+    if (localStorage.formState && localStorage.listItemState) {
+      setFormState(JSON.parse(localStorage.getItem('formState')));
+      setListItemState(JSON.parse(localStorage.getItem('listItemState')));
+    }
+  };
+
+  useEffect(() => getLocalStorage(), []);
 
   // formRef.current.close();
   // formRef.current.showModal();
@@ -318,14 +335,15 @@ const Form = () => {
           </div> */}
         {/* </div> */}
         <button
-          onClick={() =>
+          onClick={() => {
+            setLocalStorage();
             navigate('/recipe-card', {
               state: {
                 formState: { ...formState },
                 listItemState: { ...listItemState },
               },
-            })
-          }
+            });
+          }}
         >
           CREATE CARD
         </button>
