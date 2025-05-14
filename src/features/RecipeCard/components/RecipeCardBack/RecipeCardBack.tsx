@@ -33,6 +33,13 @@ const RecipeCardBack = ({
     return formattedUrl;
   };
 
+  const addFullStop = (str: string) => {
+    if (!str.endsWith('.')) {
+      return `${str}.`;
+    }
+    return str;
+  };
+
   return (
     <div className={styles.recipe_card_back}>
       <div className={styles.recipe_card_back__meta}>
@@ -56,7 +63,7 @@ const RecipeCardBack = ({
         <ul>
           {instructions.listItems.map((el) => (
             <li>
-              <span>{el.content}</span>
+              <span>{addFullStop(el.content)}</span>
             </li>
           ))}
         </ul>
@@ -66,7 +73,7 @@ const RecipeCardBack = ({
         <ul>
           {tips.listItems.map((el) => (
             <li>
-              <span>{el.content}</span>
+              <span>{addFullStop(el.content)}</span>
             </li>
           ))}
         </ul>
