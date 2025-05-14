@@ -3,8 +3,10 @@ export type FormInputId =
   | 'image'
   | 'url'
   | 'serves'
-  | 'prepTime'
-  | 'cookTime'
+  | 'prepTimeHour'
+  | 'prepTimeMin'
+  | 'cookTimeHour'
+  | 'cookTimeMin'
   | 'ovenTemp';
 
 export type FormInputListId = 'instructions' | 'ingredients' | 'tips';
@@ -15,8 +17,10 @@ export type FormStateType = {
   ingredients: string;
   url: string;
   serves: string;
-  prepTime: string;
-  cookTime: string;
+  prepTimeHour: string;
+  prepTimeMin: string;
+  cookTimeHour: string;
+  cookTimeMin: string;
   ovenTemp: string;
   instructions: string;
   tips: string;

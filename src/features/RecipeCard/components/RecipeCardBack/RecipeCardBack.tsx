@@ -11,8 +11,10 @@ type RecipeCardBackProps = {
 
 const RecipeCardBack = ({
   serves,
-  prepTime,
-  cookTime,
+  prepTimeHour,
+  prepTimeMin,
+  cookTimeHour,
+  cookTimeMin,
   ovenTemp,
   instructions,
   tips,
@@ -40,6 +42,20 @@ const RecipeCardBack = ({
     return str;
   };
 
+  const formatTime = (hour, min) => {
+    console.log(hour, min);
+    if (hour && min) {
+      return `${hour > 1 ? `${hour} hours` : `${hour} hour`} ${
+        min > 1 ? `${min} mins` : `${min} min`
+      }`;
+      // return `${hour} hour ${min} minutes`;
+    } else if (!min) {
+      return `${hour} hour`;
+    } else {
+      return `${min} minutes`;
+    }
+  };
+
   return (
     <div className={styles.recipe_card_back}>
       <div className={styles.recipe_card_back__meta}>
@@ -48,14 +64,22 @@ const RecipeCardBack = ({
             <span>serves:</span>&nbsp;{serves}
           </li>
           <li>
-            <span>preparation time:</span>&nbsp;{prepTime}
+            <span>preparation time:</span>&nbsp;
+            {formatTime(prepTimeHour, prepTimeMin)}
           </li>
           <li>
-            <span>cooking time:</span>&nbsp;{cookTime}
+            <span>cooking time:</span>&nbsp;
+            {formatTime(cookTimeHour, cookTimeMin)}
           </li>
           <li>
-            <span>oven temperature:</span>&nbsp;{ovenTemp}
+            <span>Total time:</span>&nbsp;
+            {formatTime(cookTimeHour + prepTimeHour, cookTimeMin + prepTimeMin)}
           </li>
+          {ovenTemp ? (
+            <li>
+              <span>oven temperature:</span>&nbsp;{ovenTemp}C
+            </li>
+          ) : null}
         </ul>
       </div>
       <div className={styles.recipe_card_back__instructions}>

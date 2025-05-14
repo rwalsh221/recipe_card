@@ -1,0 +1,14 @@
+.formInputTime__inputContainer {
+  margin: 0.5rem;
+  border: var(--border-100-c2);
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.formInputTime input {
+  border: var(--border-100-c1);
+  font-size: 20px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  width: 100%;
+}

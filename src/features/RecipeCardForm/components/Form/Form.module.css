@@ -7,6 +7,18 @@
   margin-bottom: 1rem;
 }
 
+.formBasicInfo__timeContainer {
+  padding: 1rem;
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.formBasicInfo__timeContainer h3 {
+  color: var(--color-2);
+  font-weight: bold;
+}
+
 .formSubHeading {
   color: var(--color-2);
   font-weight: bold;

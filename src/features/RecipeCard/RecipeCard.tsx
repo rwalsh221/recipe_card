@@ -19,8 +19,10 @@ const RecipeCard = () => {
       />
       <RecipeCardBack
         serves={location.state.formState.serves}
-        prepTime={location.state.formState.prepTime}
-        cookTime={location.state.formState.cookTime}
+        prepTimeHour={location.state.formState.prepTimeHour}
+        prepTimeMin={location.state.formState.prepTimeMin}
+        cookTimeHour={location.state.formState.cookTimeHour}
+        cookTimeMin={location.state.formState.cookTimeMin}
         ovenTemp={location.state.formState.ovenTemp}
         instructions={location.state.listItemState.instructions}
         tips={location.state.listItemState.tips}
@@ -38,5 +40,6 @@ export default RecipeCard;
 // func to remove http://www. from qr url done!!!!
 // fucn to add . to end of uinstructions done!!!
 // create own list item marker to maintain formatting
-// add save recipe to local storage
+// add save recipe to local storage done!!!
+// need clear local storage button on form plus reset all state
 // add form input to timeings for hour and mins.

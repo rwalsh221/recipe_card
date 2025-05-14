@@ -3,6 +3,7 @@ import { useState, useRef, useId, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import FormInput from '../FormInput/FormInput';
+import FormInputTime from '../FormInputTime/FormInputTime';
 import FormInputList from '../FormInputList/FormInputList';
 import FormList from '../FormList/FormList';
 import FormModal from '../FormModal/FormModal';
@@ -41,8 +42,10 @@ const Form = () => {
     ingredients: '',
     url: '',
     serves: '',
-    prepTime: '',
-    cookTime: '',
+    prepTimeHour: '',
+    prepTimeMin: '',
+    cookTimeHour: '',
+    cookTimeMin: '',
     ovenTemp: '',
     instructions: '',
     tips: '',
@@ -99,6 +102,7 @@ const Form = () => {
     key: keyof FormStateType,
     value: string
   ): void => {
+    console.log(key);
     const formStateCopy = { ...formState };
     formStateCopy[key] = value;
     setFormState({ ...formStateCopy });
@@ -243,26 +247,49 @@ const Form = () => {
               inputType="number"
             />
             <FormInput
-              formInputId="prepTime"
-              changeInputHandler={changeInputHandler}
-              inputPlaceHolder="preperation time"
-              inputValue={formState.prepTime}
-              inputType="text"
-            />
-            <FormInput
-              formInputId="cookTime"
-              changeInputHandler={changeInputHandler}
-              inputPlaceHolder="cooking time"
-              inputValue={formState.cookTime}
-              inputType="text"
-            />
-            <FormInput
               formInputId="ovenTemp"
               changeInputHandler={changeInputHandler}
               inputPlaceHolder="oven temperature"
               inputValue={formState.ovenTemp}
               inputType="text"
             />
+          </div>
+          <div className={styles.formBasicInfo__timeContainer}>
+            {/* <FormInputTime /> */}
+            <div>
+              <h3>Preperation Time:</h3>
+              <FormInput
+                formInputId="prepTimeHour"
+                changeInputHandler={changeInputHandler}
+                inputPlaceHolder="hour"
+                inputValue={formState.prepTimeHour}
+                inputType="text"
+              />
+              <FormInput
+                formInputId="prepTimeMin"
+                changeInputHandler={changeInputHandler}
+                inputPlaceHolder="min"
+                inputValue={formState.prepTimeMin}
+                inputType="text"
+              />
+            </div>
+            <div>
+              <h3>Cook Time:</h3>
+              <FormInput
+                formInputId="cookTimeHour"
+                changeInputHandler={changeInputHandler}
+                inputPlaceHolder="hour"
+                inputValue={formState.cookTimeHour}
+                inputType="text"
+              />
+              <FormInput
+                formInputId="cookTimeMin"
+                changeInputHandler={changeInputHandler}
+                inputPlaceHolder="min"
+                inputValue={formState.cookTimeMin}
+                inputType="text"
+              />
+            </div>
           </div>
         </form>
         {/* NEEDS ADD TO ARRAY */}
