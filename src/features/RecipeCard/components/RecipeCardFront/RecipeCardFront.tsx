@@ -35,12 +35,6 @@ const RecipeCardFront = ({
         <ul>
           {ingredients.listItems.map((el) => (
             <li>{el.content}</li>
-          ))}{' '}
-          {ingredients.listItems.map((el) => (
-            <li>{el.content}</li>
-          ))}{' '}
-          {ingredients.listItems.map((el) => (
-            <li>{el.content}</li>
           ))}
         </ul>
       </div>
@@ -48,7 +42,6 @@ const RecipeCardFront = ({
         className={`${styles.recipe_card_front__section} ${styles.recipe_card_front__qrcode}`}
       >
         <QRCode value={qrUrl} size={100} />
-        <p>{qrUrl}</p>
       </div>
     </div>
   );

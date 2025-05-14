@@ -12,14 +12,30 @@ type RecipeCardBackProps = {
 const RecipeCardBack = ({
   serves,
   prepTime,
-  bakingTime,
+  cookTime,
   ovenTemp,
   instructions,
   tips,
+  qrUrl,
 }: RecipeCardBackProps) => {
+  const formatUrl = (url: string) => {
+    let formattedUrl;
+    if (url.includes('https://')) {
+      formattedUrl = url.replace('https://', '');
+    } else if (url.includes('http://')) {
+      formattedUrl = url.replace('http://', '');
+    }
+
+    if (formattedUrl?.slice(0, 4) === 'www.') {
+      formattedUrl = formattedUrl.replace('www.', '');
+    }
+
+    return formattedUrl;
+  };
+
   return (
     <div className={styles.recipe_card_back}>
-      <div>
+      <div className={styles.recipe_card_back__meta}>
         <ul>
           <li>
             <span>serves:</span>&nbsp;{serves}
@@ -28,28 +44,35 @@ const RecipeCardBack = ({
             <span>preparation time:</span>&nbsp;{prepTime}
           </li>
           <li>
-            <span>baking time:</span>&nbsp;{bakingTime}
+            <span>cooking time:</span>&nbsp;{cookTime}
           </li>
           <li>
             <span>oven temperature:</span>&nbsp;{ovenTemp}
           </li>
         </ul>
       </div>
-      <div>
-        <h3>{instructions.title}</h3>
+      <div className={styles.recipe_card_back__instructions}>
+        <h3>{instructions.title}:</h3>
         <ul>
           {instructions.listItems.map((el) => (
-            <li>{el.content}</li>
+            <li>
+              <span>{el.content}</span>
+            </li>
           ))}
         </ul>
       </div>
-      <div>
-        <h3>{tips.title}</h3>
+      <div className={styles.recipe_card_back__tips}>
+        <h3>{tips.title}:</h3>
         <ul>
           {tips.listItems.map((el) => (
-            <li>{el.content}</li>
+            <li>
+              <span>{el.content}</span>
+            </li>
           ))}
         </ul>
+      </div>
+      <div className={styles.recipe_card_back__footer}>
+        <p>{formatUrl(qrUrl)}</p>
       </div>
     </div>
   );
