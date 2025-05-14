@@ -43,6 +43,7 @@ const RecipeCardBack = ({
   };
 
   const formatTime = (hour, min) => {
+    console.log(typeof hour);
     console.log(hour, min);
     if (hour && min) {
       return `${hour > 1 ? `${hour} hours` : `${hour} hour`} ${
@@ -54,6 +55,29 @@ const RecipeCardBack = ({
     } else {
       return `${min} minutes`;
     }
+  };
+
+  const formatTotalTime = (
+    firstHour: string,
+    firstMin: string,
+    secondHour: string,
+    secondMin: string
+  ) => {
+    let totalHour = +firstHour + +secondHour;
+
+    let totalMin: number | string = +firstMin + +secondMin;
+
+    if (totalMin <= 60) {
+      return formatTime(totalHour, totalMin);
+    }
+    totalMin = (totalMin / 60).toString();
+
+    const totalMinArr = totalMin.split('.');
+
+    totalHour = totalHour + +totalMinArr[0];
+    totalMin = Math.round(+`0.${totalMinArr[1]}` * 60);
+
+    return formatTime(totalHour, totalMin);
   };
 
   return (
@@ -73,7 +97,12 @@ const RecipeCardBack = ({
           </li>
           <li>
             <span>Total time:</span>&nbsp;
-            {formatTime(cookTimeHour + prepTimeHour, cookTimeMin + prepTimeMin)}
+            {formatTotalTime(
+              cookTimeHour,
+              cookTimeMin,
+              prepTimeHour,
+              prepTimeMin
+            )}
           </li>
           {ovenTemp ? (
             <li>

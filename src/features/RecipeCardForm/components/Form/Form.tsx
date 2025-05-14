@@ -263,14 +263,14 @@ const Form = () => {
                 changeInputHandler={changeInputHandler}
                 inputPlaceHolder="hour"
                 inputValue={formState.prepTimeHour}
-                inputType="text"
+                inputType="number"
               />
               <FormInput
                 formInputId="prepTimeMin"
                 changeInputHandler={changeInputHandler}
                 inputPlaceHolder="min"
                 inputValue={formState.prepTimeMin}
-                inputType="text"
+                inputType="number"
               />
             </div>
             <div>
@@ -280,14 +280,14 @@ const Form = () => {
                 changeInputHandler={changeInputHandler}
                 inputPlaceHolder="hour"
                 inputValue={formState.cookTimeHour}
-                inputType="text"
+                inputType="number"
               />
               <FormInput
                 formInputId="cookTimeMin"
                 changeInputHandler={changeInputHandler}
                 inputPlaceHolder="min"
                 inputValue={formState.cookTimeMin}
-                inputType="text"
+                inputType="number"
               />
             </div>
           </div>
