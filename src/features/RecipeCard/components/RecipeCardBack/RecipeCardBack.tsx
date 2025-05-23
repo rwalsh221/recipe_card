@@ -3,6 +3,7 @@ import styles from './RecipeCardBack.module.css';
 type RecipeCardBackProps = {
   serves: string;
   prepTime: string;
+  prepTimeHour: string;
   bakingTime: string;
   ovenTemp: string;
   instructions: string[];
@@ -42,18 +43,17 @@ const RecipeCardBack = ({
     return str;
   };
 
-  const formatTime = (hour, min) => {
+  const formatTime = (hour: number, min: number) => {
     console.log(typeof hour);
     console.log(hour, min);
-    if (hour && min) {
-      return `${hour > 1 ? `${hour} hours` : `${hour} hour`} ${
-        min > 1 ? `${min} mins` : `${min} min`
-      }`;
-      // return `${hour} hour ${min} minutes`;
+    if (!hour) {
+      return `${min} minutes`;
     } else if (!min) {
       return `${hour} hour`;
     } else {
-      return `${min} minutes`;
+      return `${hour > 1 ? `${hour} hours` : `${hour} hour`} ${
+        min > 1 ? `${min} mins` : `${min} min`
+      }`;
     }
   };
 
@@ -89,11 +89,11 @@ const RecipeCardBack = ({
           </li>
           <li>
             <span>preparation time:</span>&nbsp;
-            {formatTime(prepTimeHour, prepTimeMin)}
+            {formatTime(parseInt(prepTimeHour), parseInt(prepTimeMin))}
           </li>
           <li>
             <span>cooking time:</span>&nbsp;
-            {formatTime(cookTimeHour, cookTimeMin)}
+            {formatTime(parseInt(cookTimeHour), parseInt(cookTimeMin))}
           </li>
           <li>
             <span>Total time:</span>&nbsp;

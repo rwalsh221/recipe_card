@@ -42,4 +42,6 @@ export default RecipeCard;
 // create own list item marker to maintain formatting
 // add save recipe to local storage done!!!
 // need clear local storage button on form plus reset all state
-// add form input to timeings for hour and mins.
+// add form input to timeings for hour and mins done !!!.
+// create button component
+// test print
