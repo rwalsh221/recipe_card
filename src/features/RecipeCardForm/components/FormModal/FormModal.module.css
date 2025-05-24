@@ -1,7 +1,8 @@
 .formModal {
   width: 60vw;
-  min-height: max-content;
-  max-height: 60vh;
+  min-height: 20vh;
+  max-height: 80vh;
+  /* overflow-x: scroll; */
   margin: auto;
   border: var(--border-500-c2);
   border-radius: 10px;
@@ -22,7 +23,7 @@ dialog::backdrop {
 }
 
 .modal_btn_container {
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -38,6 +39,13 @@ dialog::backdrop {
 
 .modal_btn_container button:not(:last-of-type) {
   margin-right: 0.5rem;
+}
+
+.modal_btn_container__submit {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .modal_input_container {

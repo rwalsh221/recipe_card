@@ -1,8 +1,8 @@
-import styles from './ButtonSmall.module.css';
+import styles from './Buttons.module.css';
 
 type ButtonProps = {
   content: string;
-  onclick?: () => void;
+  onclick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 const ButtonSmall = ({ content, onclick }: ButtonProps) => {

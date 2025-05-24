@@ -8,7 +8,7 @@ import FormInputList from '../FormInputList/FormInputList';
 import FormList from '../FormList/FormList';
 import FormModal from '../FormModal/FormModal';
 import FormModalDLL from '../FormModal/FormModalDLL';
-import Button from '../../../../components/Button/Button';
+import Button from '../../../../components/Buttons/Button';
 
 import {
   type FormStateType,

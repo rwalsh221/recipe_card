@@ -1,4 +1,4 @@
-import styles from './Button.module.css';
+import styles from './Buttons.module.css';
 
 type ButtonProps = {
   content: string;

@@ -4,7 +4,7 @@ import Styles from './RecipeCard.module.css';
 
 import RecipeCardFront from './components/RecipeCardFront/RecipeCardFront';
 import RecipeCardBack from './components/RecipeCardBack/RecipeCardBack';
-import Button from '../../components/Button/Button';
+import Button from '../../components/Buttons/Button';
 
 const RecipeCard = () => {
   const location = useLocation();

@@ -1,7 +1,7 @@
 import styles from './FormList.module.css';
 
 import FormListItem from '../FormListItem/FormListItem';
-import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall';
+import ButtonSmall from '../../../../components/Buttons/ButtonSmall';
 
 import { type ListItemStateObject } from '../../types/RecipeCardFormTypes';
 

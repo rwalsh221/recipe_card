@@ -4,6 +4,9 @@ import FormModalReducer from './FormModal.reducer';
 // import FormInput from '../FormInput/FormInput';
 import { useRef, useEffect, useReducer } from 'react';
 
+import Button from '../../../../components/Buttons/Button';
+import EventButton from '../../../../components/Buttons/EventButton';
+
 import {
   type ListItemStateType,
   type ListItemStateListItems,
@@ -112,8 +115,22 @@ const FormModal = ({
               </div>
             );
           })}
-        <div className={styles.modal_btn_container}>
-          <button
+        <div className={styles.modal_btn_container__submit}>
+          <EventButton
+            content="save changes"
+            onclickEvent={(e) => {
+              e.preventDefault();
+              saveListItemChanges(listItemStateKey, state.head);
+            }}
+          />
+          <EventButton
+            content="discard changes"
+            onclickEvent={(e) => {
+              e.preventDefault();
+              closeFormModal();
+            }}
+          />
+          {/* <button
             onClick={(e) => {
               e.preventDefault();
               saveListItemChanges(listItemStateKey, state.head);
@@ -128,7 +145,7 @@ const FormModal = ({
             }}
           >
             Discard Changes
-          </button>
+          </button> */}
         </div>
       </form>
     </dialog>

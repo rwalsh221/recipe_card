@@ -1,0 +1,34 @@
+.button {
+  padding: 1rem;
+  text-transform: capitalize;
+  border: var(--border-300-c2);
+  border-radius: 10px;
+  background-color: var(--color-1);
+  color: var(--color-2);
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  color: var(--color-1);
+  background-color: var(--color-2);
+  outline: var(--border-300-c2);
+  border-color: var(--color-1);
+}
+.buttonSmall {
+  padding: 0.5rem;
+  text-transform: capitalize;
+  border: var(--border-100-c2);
+  border-radius: 10px;
+  background-color: var(--color-1);
+  color: var(--color-2);
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.buttonSmall:hover {
+  color: var(--color-1);
+  background-color: var(--color-2);
+  outline: var(--border-100-c2);
+  border-color: var(--color-1);
+}
