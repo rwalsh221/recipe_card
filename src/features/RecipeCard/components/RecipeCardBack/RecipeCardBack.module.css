@@ -64,13 +64,14 @@
 
 .recipe_card_back__instructions ul,
 .recipe_card_back__tips ul {
-  list-style-position: inside;
+  /* list-style-position: inside; */
+  margin-left: 1rem;
 }
 
 .recipe_card_back__instructions ul span,
 .recipe_card_back__tips ul span {
-  position: relative;
-  left: -10px;
+  /* position: relative;
+  left: -10px; */
 }
 
 .recipe_card_back__footer {

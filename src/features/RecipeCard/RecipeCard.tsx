@@ -40,7 +40,7 @@ export default RecipeCard;
 
 // func to remove http://www. from qr url done!!!!
 // fucn to add . to end of uinstructions done!!!
-// create own list item marker to maintain formatting
+// create own list item marker to maintain formatting done!!
 // add save recipe to local storage done!!!
 // need clear local storage button on form plus reset all state
 // add form input to timeings for hour and mins done !!!.
