@@ -8,6 +8,7 @@ import FormInputList from '../FormInputList/FormInputList';
 import FormList from '../FormList/FormList';
 import FormModal from '../FormModal/FormModal';
 import FormModalDLL from '../FormModal/FormModalDLL';
+import Button from '../../../../components/Button/Button';
 
 import {
   type FormStateType,
@@ -361,7 +362,19 @@ const Form = () => {
             </div>
           </div> */}
         {/* </div> */}
-        <button
+        <Button
+          content="create card"
+          onclick={() => {
+            setLocalStorage();
+            navigate('/recipe-card', {
+              state: {
+                formState: { ...formState },
+                listItemState: { ...listItemState },
+              },
+            });
+          }}
+        />
+        {/* <button
           onClick={() => {
             setLocalStorage();
             navigate('/recipe-card', {
@@ -373,7 +386,7 @@ const Form = () => {
           }}
         >
           CREATE CARD
-        </button>
+        </button> */}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import styles from './FormList.module.css';
 
 import FormListItem from '../FormListItem/FormListItem';
+import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall';
 
 import { type ListItemStateObject } from '../../types/RecipeCardFormTypes';
 
@@ -36,7 +37,7 @@ const FormList = ({ listItemState, showModalHandler }: FormListProps) => {
     <div className={styles.formList}>
       <div className={styles.formListHeader}>
         <h3>{listItemState.title}</h3>
-        <button
+        {/* <button
           type="button"
           onClick={(e) => {
             e.preventDefault();
@@ -44,7 +45,14 @@ const FormList = ({ listItemState, showModalHandler }: FormListProps) => {
           }}
         >
           edit
-        </button>
+        </button> */}
+        <ButtonSmall
+          content="edit"
+          onclick={(e) => {
+            e.preventDefault();
+            showModalHandler(listItemState.title);
+          }}
+        />
       </div>
       <ul className={styles.listItemContainer}>
         {/* {Object.keys(listItemState.listItems).map((el) => (

@@ -1,6 +1,11 @@
+.formList {
+  padding: 0.5rem;
+}
+
 .formListHeader {
   display: flex;
   justify-content: center;
+  margin-bottom: 5px;
 }
 
 .formListHeader h3 {
@@ -18,10 +23,10 @@
   padding: 0.5rem 0;
 }
 
-.formListHeader button {
+/* .formListHeader button {
   width: 10%;
   background-color: var(--color-2);
-}
+} */
 
 .listItemContainer {
   margin: 0.2rem;

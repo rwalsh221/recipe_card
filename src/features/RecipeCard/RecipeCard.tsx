@@ -4,6 +4,7 @@ import Styles from './RecipeCard.module.css';
 
 import RecipeCardFront from './components/RecipeCardFront/RecipeCardFront';
 import RecipeCardBack from './components/RecipeCardBack/RecipeCardBack';
+import Button from '../../components/Button/Button';
 
 const RecipeCard = () => {
   const location = useLocation();
@@ -28,9 +29,9 @@ const RecipeCard = () => {
         tips={location.state.listItemState.tips}
         qrUrl={location.state.formState.url}
       />
-      <button>chnage side</button>
-      <button>print</button>
-      <button>edit</button>
+      <Button content="change side" />
+      <Button content="print" />
+      <Button content="edit" />
     </div>
   );
 };
@@ -45,3 +46,4 @@ export default RecipeCard;
 // add form input to timeings for hour and mins done !!!.
 // create button component
 // test print
+// fix edit list item overflow
