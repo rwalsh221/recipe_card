@@ -46,3 +46,7 @@
   grid-column: 2;
   grid-row: 1 / span 2;
 }
+
+.form__btnContainer > button:not(:last-of-type) {
+  margin-right: 0.5rem;
+}

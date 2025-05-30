@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import Styles from './RecipeCard.module.css';
 
@@ -8,6 +8,7 @@ import Button from '../../components/Buttons/Button';
 
 const RecipeCard = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   console.log(location);
   // get state from route
   return (
@@ -29,9 +30,16 @@ const RecipeCard = () => {
         tips={location.state.listItemState.tips}
         qrUrl={location.state.formState.url}
       />
-      <Button content="change side" />
-      <Button content="print" />
-      <Button content="edit" />
+      <div className={Styles.recipeCard__btnContainer}>
+        <Button content="change side" />
+        <Button content="print" />
+        <Button
+          content="edit"
+          onclick={() => {
+            navigate('/');
+          }}
+        />
+      </div>
     </div>
   );
 };
