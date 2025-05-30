@@ -79,6 +79,8 @@ const Form = () => {
 
   console.log(formRef);
 
+  // LOCAL STORAGE FUNCTIONS
+
   const setLocalStorage = () => {
     const formStateJson = JSON.stringify(formState);
     const listItemStateJson = JSON.stringify(listItemState);
@@ -92,6 +94,21 @@ const Form = () => {
       setFormState(JSON.parse(localStorage.getItem('formState')));
       setListItemState(JSON.parse(localStorage.getItem('listItemState')));
     }
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+    const formStateCopy = structuredClone(formState);
+    const listItemStateCopy = structuredClone(listItemState);
+
+    Object.keys(formStateCopy).forEach((key) => (formStateCopy[key] = ''));
+
+    Object.keys(listItemStateCopy).forEach(
+      (key) => (listItemStateCopy[key].listItems = [])
+    );
+
+    setFormState(formStateCopy);
+    setListItemState(listItemStateCopy);
   };
 
   useEffect(() => getLocalStorage(), []);
@@ -144,14 +161,6 @@ const Form = () => {
 
     setListItemState(listItemStateCopy);
     setFormState(formStateCopy);
-  };
-
-  const testSetFunc = (input) => {
-    console.log('clci');
-    const listItemStateCopy = { ...listItemState };
-    listItemStateCopy.ingredients.listItems = [...input];
-    console.log(listItemStateCopy);
-    setListItemState({ ...listItemStateCopy });
   };
 
   const showFormModal = (listItemStateKey: string) => {
@@ -315,78 +324,22 @@ const Form = () => {
             </div>
           </div>
         ))}
-        {/* <div className={styles.formAdditionalInfo__inputContainer}>
-          <h2 className={styles.formSubHeading}>Add Ingredients:</h2>
-          <FormInputList
-            formInputListId="ingredients"
-            changeInputHandler={changeInputHandler}
-            addToListItemState={addToListItemState}
-            inputPlaceHolder="add ingredient"
-            inputValue={formState.ingredients}
-            inputType="text"
+
+        <div className={styles.form__btnContainer}>
+          <Button
+            content="create card"
+            onclick={() => {
+              setLocalStorage();
+              navigate('/recipe-card', {
+                state: {
+                  formState: { ...formState },
+                  listItemState: { ...listItemState },
+                },
+              });
+            }}
           />
-          <div className={styles.formListContainer}>
-            <FormList
-              listItemState={listItemState.ingredients}
-              showModalHandler={showFormModal}
-            />
-          </div>
+          <Button content="reset form" onclick={clearLocalStorage} />
         </div>
-        <div className={styles.formAdditionalInfo}>
-          <div className={styles.formAdditionalInfo__inputContainer}>
-            <h2 className={styles.formSubHeading}>Add Instructions:</h2>
-            <FormInputList
-              formInputListId="instructions"
-              changeInputHandler={changeInputHandler}
-              addToListItemState={addToListItemState}
-              inputPlaceHolder="add instruction"
-              inputValue={formState.instructions}
-              inputType="text"
-            />
-            <div className={styles.formListContainer}>
-              <FormList listItemState={listItemState.instructions} />
-            </div>
-          </div>
-          <div className={styles.formAdditionalInfo__inputContainer}>
-            <h2 className={styles.formSubHeading}>Add Tips:</h2>
-            <FormInputList
-              formInputListId="tips"
-              inputPlaceHolder="add tip"
-              inputValue={formState.tips}
-              inputType="text"
-              changeInputHandler={changeInputHandler}
-              addToListItemState={addToListItemState}
-            />
-            <div className={styles.formListContainer}>
-              <FormList listItemState={listItemState.tips} />
-            </div>
-          </div> */}
-        {/* </div> */}
-        <Button
-          content="create card"
-          onclick={() => {
-            setLocalStorage();
-            navigate('/recipe-card', {
-              state: {
-                formState: { ...formState },
-                listItemState: { ...listItemState },
-              },
-            });
-          }}
-        />
-        {/* <button
-          onClick={() => {
-            setLocalStorage();
-            navigate('/recipe-card', {
-              state: {
-                formState: { ...formState },
-                listItemState: { ...listItemState },
-              },
-            });
-          }}
-        >
-          CREATE CARD
-        </button> */}
       </div>
     </>
   );

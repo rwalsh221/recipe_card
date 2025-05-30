@@ -44,6 +44,7 @@ export default RecipeCard;
 // add save recipe to local storage done!!!
 // need clear local storage button on form plus reset all state
 // add form input to timeings for hour and mins done !!!.
-// create button component
+// create button component done
 // test print
-// fix edit list item overflow
+// fix edit list item overflow done
+// form validation
