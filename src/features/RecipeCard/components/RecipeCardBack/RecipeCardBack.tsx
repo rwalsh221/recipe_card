@@ -2,12 +2,14 @@ import styles from './RecipeCardBack.module.css';
 
 type RecipeCardBackProps = {
   serves: string;
-  prepTime: string;
-  prepTimeHour: string;
-  bakingTime: string;
-  ovenTemp: string;
+  prepTimeHour: number;
+  prepTimeMin: number;
+  cookTimeHour: number;
+  cookTimeMin: number;
+  ovenTemp?: string;
   instructions: string[];
   tips: string[];
+  qrUrl: string;
 };
 
 const RecipeCardBack = ({
@@ -21,6 +23,7 @@ const RecipeCardBack = ({
   tips,
   qrUrl,
 }: RecipeCardBackProps) => {
+  console.log(prepTimeHour, prepTimeMin);
   const formatUrl = (url: string) => {
     let formattedUrl;
     if (url.includes('https://')) {
@@ -46,10 +49,11 @@ const RecipeCardBack = ({
   const formatTime = (hour: number, min: number) => {
     console.log(typeof hour);
     console.log(hour, min);
-    if (!hour) {
-      return `${min} minutes`;
-    } else if (!min) {
-      return `${hour} hour`;
+
+    if (hour === 0) {
+      return min > 1 ? `${min} mins` : `${min} min`;
+    } else if (min === 0) {
+      return hour > 1 ? `${hour} hours` : `${hour} hour`;
     } else {
       return `${hour > 1 ? `${hour} hours` : `${hour} hour`} ${
         min > 1 ? `${min} mins` : `${min} min`
@@ -58,21 +62,22 @@ const RecipeCardBack = ({
   };
 
   const formatTotalTime = (
-    firstHour: string,
-    firstMin: string,
-    secondHour: string,
-    secondMin: string
+    firstHour: number,
+    firstMin: number,
+    secondHour: number,
+    secondMin: number
   ) => {
-    let totalHour = +firstHour + +secondHour;
+    let totalHour = firstHour + secondHour;
 
-    let totalMin: number | string = +firstMin + +secondMin;
+    let totalMin = firstMin + secondMin;
 
     if (totalMin <= 60) {
       return formatTime(totalHour, totalMin);
     }
-    totalMin = (totalMin / 60).toString();
 
-    const totalMinArr = totalMin.split('.');
+    const totalMinStr = (totalMin / 60).toString();
+
+    const totalMinArr = totalMinStr.split('.');
 
     totalHour = totalHour + +totalMinArr[0];
     totalMin = Math.round(+`0.${totalMinArr[1]}` * 60);
@@ -89,11 +94,11 @@ const RecipeCardBack = ({
           </li>
           <li>
             <span>preparation time:</span>&nbsp;
-            {formatTime(parseInt(prepTimeHour), parseInt(prepTimeMin))}
+            {formatTime(prepTimeHour, prepTimeMin)}
           </li>
           <li>
             <span>cooking time:</span>&nbsp;
-            {formatTime(parseInt(cookTimeHour), parseInt(cookTimeMin))}
+            {formatTime(cookTimeHour, cookTimeMin)}
           </li>
           <li>
             <span>Total time:</span>&nbsp;

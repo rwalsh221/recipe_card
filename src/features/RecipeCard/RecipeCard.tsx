@@ -9,8 +9,7 @@ import Button from '../../components/Buttons/Button';
 const RecipeCard = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
-  // get state from route
+
   return (
     <div>
       <RecipeCardFront
@@ -20,11 +19,30 @@ const RecipeCard = () => {
         ingredients={location.state.listItemState.ingredients}
       />
       <RecipeCardBack
-        serves={location.state.formState.serves}
-        prepTimeHour={location.state.formState.prepTimeHour}
-        prepTimeMin={location.state.formState.prepTimeMin}
-        cookTimeHour={location.state.formState.cookTimeHour}
-        cookTimeMin={location.state.formState.cookTimeMin}
+        // DEFAULT VALUES FOR TIME IF FORM IS LEFT EMPTY
+        serves={
+          location.state.formState.serves ? location.state.formState.serves : 4
+        }
+        prepTimeHour={
+          location.state.formState.prepTimeHour
+            ? parseInt(location.state.formState.prepTimeHour)
+            : 0
+        }
+        prepTimeMin={
+          location.state.formState.prepTimeMin
+            ? parseInt(location.state.formState.prepTimeMin)
+            : 30
+        }
+        cookTimeHour={
+          location.state.formState.cookTimeHour
+            ? parseInt(location.state.formState.cookTimeHour)
+            : 1
+        }
+        cookTimeMin={
+          location.state.formState.cookTimeMin
+            ? parseInt(location.state.formState.cookTimeMin)
+            : 0
+        }
         ovenTemp={location.state.formState.ovenTemp}
         instructions={location.state.listItemState.instructions}
         tips={location.state.listItemState.tips}
@@ -50,9 +68,12 @@ export default RecipeCard;
 // fucn to add . to end of uinstructions done!!!
 // create own list item marker to maintain formatting done!!
 // add save recipe to local storage done!!!
-// need clear local storage button on form plus reset all state
+// need clear local storage button on form plus reset all state done!!!
 // add form input to timeings for hour and mins done !!!.
-// create button component done
+// create button component done!!!!
 // test print
-// fix edit list item overflow done
+// fix edit list item overflow done!!!!
 // form validation
+// style recipecard page
+// footer
+// default for serves and cook time prep time
