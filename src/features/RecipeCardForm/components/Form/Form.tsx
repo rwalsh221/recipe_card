@@ -91,8 +91,10 @@ const Form = () => {
 
   const getLocalStorage = () => {
     if (localStorage.formState && localStorage.listItemState) {
-      setFormState(JSON.parse(localStorage.getItem('formState')));
-      setListItemState(JSON.parse(localStorage.getItem('listItemState')));
+      setFormState(JSON.parse(localStorage.getItem('formState') as string));
+      setListItemState(
+        JSON.parse(localStorage.getItem('listItemState') as string)
+      );
     }
   };
 
@@ -261,7 +263,7 @@ const Form = () => {
               changeInputHandler={changeInputHandler}
               inputPlaceHolder="oven temperature"
               inputValue={formState.ovenTemp}
-              inputType="text"
+              inputType="number"
             />
           </div>
           <div className={styles.formBasicInfo__timeContainer}>

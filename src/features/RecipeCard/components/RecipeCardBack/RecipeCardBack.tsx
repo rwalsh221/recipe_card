@@ -23,16 +23,15 @@ const RecipeCardBack = ({
   tips,
   qrUrl,
 }: RecipeCardBackProps) => {
-  console.log(prepTimeHour, prepTimeMin);
   const formatUrl = (url: string) => {
-    let formattedUrl;
+    let formattedUrl = url;
     if (url.includes('https://')) {
       formattedUrl = url.replace('https://', '');
     } else if (url.includes('http://')) {
       formattedUrl = url.replace('http://', '');
     }
 
-    if (formattedUrl?.slice(0, 4) === 'www.') {
+    if (formattedUrl.slice(0, 4) === 'www.') {
       formattedUrl = formattedUrl.replace('www.', '');
     }
 
@@ -47,9 +46,6 @@ const RecipeCardBack = ({
   };
 
   const formatTime = (hour: number, min: number) => {
-    console.log(typeof hour);
-    console.log(hour, min);
-
     if (hour === 0) {
       return min > 1 ? `${min} mins` : `${min} min`;
     } else if (min === 0) {
