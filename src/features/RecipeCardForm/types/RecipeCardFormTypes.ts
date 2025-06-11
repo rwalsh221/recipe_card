@@ -47,3 +47,5 @@ export type ShowFormModalStateType = {
   showModal: boolean;
   listItemState: string | null;
 };
+
+export type PlaceHolderStateType = 'init' | 'final' | 'focus' | 'blur';

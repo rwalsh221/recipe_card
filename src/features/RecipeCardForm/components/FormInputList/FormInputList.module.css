@@ -2,7 +2,7 @@
   display: flex;
   /* align-items: flex-start; */
   border: var(--border-100-c2);
-  padding: 0.5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
 .formInputListContainer input,
@@ -32,4 +32,116 @@
   border: 1px solid red;
   background-color: white;
   color: red;
+}
+
+.formInputListContainer__inputCtn {
+  position: relative;
+}
+
+.formInputListContainer__inputCtn label {
+  text-transform: capitalize;
+  position: absolute;
+}
+
+.labelBig {
+  left: 9px;
+  top: 9px;
+  color: var(--color-2);
+  font-size: 20px;
+}
+
+.labelSmall {
+  display: none;
+  background-color: var(--color-2);
+  color: var(--color-1);
+  border: 0.5px solid var(--color-1);
+  font-size: 14px;
+  top: 9px;
+  left: 7px;
+  padding: 1px 2px;
+  visibility: hidden;
+}
+
+.labelSmall__up {
+  display: block;
+  top: -12px;
+  opacity: 100%;
+  visibility: visible;
+}
+
+.labelSmall__moveUp {
+  display: block;
+  animation: labelSmallUp 0.4s forwards;
+  /* animation-delay: 0.5; */
+}
+.labelSmall__moveDown {
+  display: block;
+  animation: labelSmallDown 0.4s forwards;
+  /* animation-delay: 0.5s; */
+}
+
+.labelBig__up {
+  top: -12px;
+  opacity: 0%;
+  visibility: hidden;
+}
+
+.labelBig__moveUp {
+  animation: labelBigUp 0.4s forwards;
+}
+.labelBig__moveDown {
+  animation: labelBigDown 0.4s forwards;
+}
+
+@keyframes labelSmallUp {
+  0% {
+    top: 9px;
+    opacity: 0%;
+  }
+
+  100% {
+    top: -12px;
+    opacity: 100%;
+    visibility: visible;
+  }
+}
+
+@keyframes labelSmallDown {
+  0% {
+    top: -12px;
+    opacity: 100%;
+    visibility: visible;
+  }
+
+  100% {
+    top: 9px;
+    opacity: 0%;
+  }
+}
+
+@keyframes labelBigUp {
+  0% {
+    /* display: inline; */
+    top: 9px;
+    opacity: 100%;
+  }
+
+  100% {
+    top: -12px;
+    opacity: 0%;
+    visibility: hidden;
+  }
+}
+
+@keyframes labelBigDown {
+  0% {
+    top: -12px;
+    opacity: 0%;
+    visibility: hidden;
+  }
+
+  100% {
+    top: 9px;
+    opacity: 100%;
+  }
 }
