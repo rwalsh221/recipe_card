@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
-import Styles from './RecipeCard.module.css';
+import styles from './RecipeCard.module.css';
 
 import RecipeCardFront from './components/RecipeCardFront/RecipeCardFront';
 import RecipeCardBack from './components/RecipeCardBack/RecipeCardBack';
@@ -10,46 +11,21 @@ const RecipeCard = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [rotate, setRotate] = useState(false);
+
   return (
-    <div>
-      <RecipeCardFront
-        title={location.state.formState.title}
-        imgUrl={location.state.formState.image}
-        qrUrl={location.state.formState.url}
-        ingredients={location.state.listItemState.ingredients}
-      />
-      <RecipeCardBack
-        // DEFAULT VALUES FOR TIME IF FORM IS LEFT EMPTY
-        serves={
-          location.state.formState.serves ? location.state.formState.serves : 4
-        }
-        prepTimeHour={
-          location.state.formState.prepTimeHour
-            ? parseInt(location.state.formState.prepTimeHour)
-            : 0
-        }
-        prepTimeMin={
-          location.state.formState.prepTimeMin
-            ? parseInt(location.state.formState.prepTimeMin)
-            : 30
-        }
-        cookTimeHour={
-          location.state.formState.cookTimeHour
-            ? parseInt(location.state.formState.cookTimeHour)
-            : 1
-        }
-        cookTimeMin={
-          location.state.formState.cookTimeMin
-            ? parseInt(location.state.formState.cookTimeMin)
-            : 0
-        }
-        ovenTemp={location.state.formState.ovenTemp}
-        instructions={location.state.listItemState.instructions}
-        tips={location.state.listItemState.tips}
-        qrUrl={location.state.formState.url}
-      />
-      <div className={Styles.recipeCard__btnContainer}>
-        <Button content="change side" />
+    <div className={styles.recipecard_container}>
+      <div className={styles.recipecard__btnContainer}>
+        <Button
+          content="change side"
+          onclick={() => {
+            if (rotate) {
+              setRotate(false);
+            } else {
+              setRotate(true);
+            }
+          }}
+        />
         <Button content="print" />
         <Button
           content="edit"
@@ -57,6 +33,56 @@ const RecipeCard = () => {
             navigate('/');
           }}
         />
+      </div>
+      <div className={styles.parent}>
+        <div
+          className={`${styles.parentInner} ${
+            rotate ? styles.parentInner__back : styles.parentInner__front
+          }`}
+        >
+          <div className={styles.fr}>
+            <RecipeCardFront
+              title={location.state.formState.title}
+              imgUrl={location.state.formState.image}
+              qrUrl={location.state.formState.url}
+              ingredients={location.state.listItemState.ingredients}
+            />
+          </div>
+          <div className={styles.bk}>
+            <RecipeCardBack
+              // DEFAULT VALUES FOR TIME IF FORM IS LEFT EMPTY
+              serves={
+                location.state.formState.serves
+                  ? location.state.formState.serves
+                  : 4
+              }
+              prepTimeHour={
+                location.state.formState.prepTimeHour
+                  ? parseInt(location.state.formState.prepTimeHour)
+                  : 0
+              }
+              prepTimeMin={
+                location.state.formState.prepTimeMin
+                  ? parseInt(location.state.formState.prepTimeMin)
+                  : 30
+              }
+              cookTimeHour={
+                location.state.formState.cookTimeHour
+                  ? parseInt(location.state.formState.cookTimeHour)
+                  : 1
+              }
+              cookTimeMin={
+                location.state.formState.cookTimeMin
+                  ? parseInt(location.state.formState.cookTimeMin)
+                  : 0
+              }
+              ovenTemp={location.state.formState.ovenTemp}
+              instructions={location.state.listItemState.instructions}
+              tips={location.state.listItemState.tips}
+              qrUrl={location.state.formState.url}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
