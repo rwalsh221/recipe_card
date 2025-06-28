@@ -67,10 +67,11 @@
   margin-left: 1rem;
 }
 
-.recipe_card_back__instructions ul span,
-.recipe_card_back__tips ul span {
+.recipe_card_back__instructions ul,
+.recipe_card_back__tips ul {
   /* position: relative;
   left: -10px; */
+  text-align: start;
 }
 
 .recipe_card_back__footer {
@@ -79,4 +80,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.recipe_card_back ul li {
 }

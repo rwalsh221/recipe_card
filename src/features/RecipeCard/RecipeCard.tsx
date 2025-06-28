@@ -1,85 +1,96 @@
-import { useState } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './RecipeCard.module.css';
 
 import RecipeCardFront from './components/RecipeCardFront/RecipeCardFront';
 import RecipeCardBack from './components/RecipeCardBack/RecipeCardBack';
+import RecipeCardBtnContainer from './components/RecipeCardBtnContainer/RecipeCardBtnContainer';
 import Button from '../../components/Buttons/Button';
 
 const RecipeCard = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [rotate, setRotate] = useState(false);
+  const [rotate, setRotate] = useState<'front' | 'back'>('front');
+
+  const [printCard, setPrintCard] = useState(false);
+
+  const printRef = useRef(null);
+
+  const print = () => {
+    console.log(printRef.current);
+    let printWindow = window.open('', '', 'height=500, width=500');
+    printWindow.document.open();
+    printWindow?.document.write(printRef.current.outerHTML);
+  };
+
+  // create state to for btn content print front / print back done
+  // create print state. remove all coontent exxept btn conatiner and fr bk of card.
+  // btn conatiner = print btn trigger print - cancel change print state to resotore preview
+
+  const formState = useMemo(() => {
+    const obj = {};
+    Object.keys(location.state.formState).forEach(
+      (el) => (obj[el] = location.state.formState[el])
+    );
+
+    return obj;
+  }, [location.state.formState]);
+
+  const listItemState = useMemo(() => {
+    const obj = {};
+    Object.keys(location.state.listItemState).forEach(
+      (el) => (obj[el] = location.state.listItemState[el])
+    );
+
+    return obj;
+  }, [location.state.formState]);
+
+  console.log(formState);
+  console.log(listItemState);
 
   return (
     <div className={styles.recipecard_container}>
-      <div className={styles.recipecard__btnContainer}>
-        <Button
-          content="change side"
-          onclick={() => {
-            if (rotate) {
-              setRotate(false);
-            } else {
-              setRotate(true);
-            }
-          }}
-        />
-        <Button content="print" />
-        <Button
-          content="edit"
-          onclick={() => {
-            navigate('/');
-          }}
-        />
-      </div>
+      <RecipeCardBtnContainer rotate={rotate} setRotate={setRotate} />
       <div className={styles.parent}>
         <div
           className={`${styles.parentInner} ${
-            rotate ? styles.parentInner__back : styles.parentInner__front
+            rotate === 'back'
+              ? styles.parentInner__back
+              : styles.parentInner__front
           }`}
+          ref={printRef}
         >
           <div className={styles.fr}>
             <RecipeCardFront
-              title={location.state.formState.title}
-              imgUrl={location.state.formState.image}
-              qrUrl={location.state.formState.url}
-              ingredients={location.state.listItemState.ingredients}
+              title={formState.title}
+              imgUrl={formState.image}
+              qrUrl={formState.url}
+              ingredients={listItemState.ingredients}
             />
           </div>
           <div className={styles.bk}>
             <RecipeCardBack
               // DEFAULT VALUES FOR TIME IF FORM IS LEFT EMPTY
-              serves={
-                location.state.formState.serves
-                  ? location.state.formState.serves
-                  : 4
-              }
+              // PARSEINT HTML FORM RETURNS A STRING
+              serves={formState.serves ? formState.serves : 4}
               prepTimeHour={
-                location.state.formState.prepTimeHour
-                  ? parseInt(location.state.formState.prepTimeHour)
-                  : 0
+                formState.prepTimeHour ? parseInt(formState.prepTimeHour) : 0
               }
               prepTimeMin={
-                location.state.formState.prepTimeMin
-                  ? parseInt(location.state.formState.prepTimeMin)
-                  : 30
+                formState.prepTimeMin ? parseInt(formState.prepTimeMin) : 30
               }
               cookTimeHour={
-                location.state.formState.cookTimeHour
-                  ? parseInt(location.state.formState.cookTimeHour)
-                  : 1
+                formState.cookTimeHour ? parseInt(formState.cookTimeHour) : 1
               }
               cookTimeMin={
-                location.state.formState.cookTimeMin
-                  ? parseInt(location.state.formState.cookTimeMin)
-                  : 0
+                formState.cookTimeMin ? parseInt(formState.cookTimeMin) : 0
               }
-              ovenTemp={location.state.formState.ovenTemp}
-              instructions={location.state.listItemState.instructions}
-              tips={location.state.listItemState.tips}
-              qrUrl={location.state.formState.url}
+              ovenTemp={formState.ovenTemp}
+              instructions={listItemState.instructions}
+              tips={listItemState.tips}
+              qrUrl={formState.url}
             />
           </div>
         </div>
