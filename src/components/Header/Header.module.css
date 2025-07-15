@@ -12,3 +12,9 @@
   /* text-align: center; */
   font-size: clamp(20px, 10vw, 80px);
 }
+
+@media print {
+  .header {
+    display: none;
+  }
+}

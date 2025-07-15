@@ -1,5 +1,7 @@
 import styles from './RecipeCardBack.module.css';
 
+import { type ListItemStateObject } from '../../../../types/globalTypes';
+
 type RecipeCardBackProps = {
   serves: string;
   prepTimeHour: number;
@@ -7,8 +9,8 @@ type RecipeCardBackProps = {
   cookTimeHour: number;
   cookTimeMin: number;
   ovenTemp?: string;
-  instructions: string[];
-  tips: string[];
+  instructions: ListItemStateObject;
+  tips: ListItemStateObject;
   qrUrl: string;
 };
 

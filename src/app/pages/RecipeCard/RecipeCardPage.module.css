@@ -6,3 +6,9 @@
   justify-content: center;
   align-items: center;
 }
+
+@media print {
+  .main {
+    background-image: none;
+  }
+}

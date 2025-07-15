@@ -12,3 +12,9 @@
 .recipecard__btnContainer button:not(:last-of-type) {
   margin-bottom: 1rem;
 }
+
+@media print {
+  .recipecard__btnContainer {
+    display: none;
+  }
+}

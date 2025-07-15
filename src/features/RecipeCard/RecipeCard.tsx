@@ -1,102 +1,77 @@
-import { useState, useRef, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useState, useMemo } from 'react';
+import { useLocation } from 'react-router';
 
 import styles from './RecipeCard.module.css';
 
-import RecipeCardFront from './components/RecipeCardFront/RecipeCardFront';
-import RecipeCardBack from './components/RecipeCardBack/RecipeCardBack';
-import RecipeCardBtnContainer from './components/RecipeCardBtnContainer/RecipeCardBtnContainer';
-import Button from '../../components/Buttons/Button';
+import PrintCardPreview from './components/PrintCardPreview/PrintCardPreview';
+import PrintCardFront from './components/PrintCardFront/PrintCardFront';
+import PrintCardBack from './components/PrintCardBack/PrintCardBack';
+
+import {
+  type RotateCardState,
+  type PrintCardState,
+} from './types/RecipeCardTypes';
+
+import {
+  type FormStateType,
+  type ListItemStateType,
+} from '../../types/globalTypes';
 
 const RecipeCard = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const [rotate, setRotate] = useState<'front' | 'back'>('front');
+  const [rotate, setRotate] = useState<RotateCardState>('front');
 
-  const [printCard, setPrintCard] = useState(false);
+  const [printCard, setPrintCard] = useState<PrintCardState>('preview');
 
-  const printRef = useRef(null);
-
-  const print = () => {
-    console.log(printRef.current);
-    let printWindow = window.open('', '', 'height=500, width=500');
-    printWindow.document.open();
-    printWindow?.document.write(printRef.current.outerHTML);
+  const printCardStateHandler = (side?: RotateCardState | undefined) => {
+    if (printCard === 'preview' && side) {
+      setPrintCard(side);
+    } else {
+      setPrintCard('preview');
+    }
   };
 
-  // create state to for btn content print front / print back done
-  // create print state. remove all coontent exxept btn conatiner and fr bk of card.
-  // btn conatiner = print btn trigger print - cancel change print state to resotore preview
+  // recipeCardData simplify's var name when passed as props. UseMemo prevents creating new variable when changing RecipeCard state
+  const recipeCardData = useMemo<FormStateType & ListItemStateType>(
+    () => ({
+      ...location.state.formState,
+      ...location.state.listItemState,
+    }),
 
-  const formState = useMemo(() => {
-    const obj = {};
-    Object.keys(location.state.formState).forEach(
-      (el) => (obj[el] = location.state.formState[el])
-    );
-
-    return obj;
-  }, [location.state.formState]);
-
-  const listItemState = useMemo(() => {
-    const obj = {};
-    Object.keys(location.state.listItemState).forEach(
-      (el) => (obj[el] = location.state.listItemState[el])
-    );
-
-    return obj;
-  }, [location.state.formState]);
-
-  console.log(formState);
-  console.log(listItemState);
-
-  return (
-    <div className={styles.recipecard_container}>
-      <RecipeCardBtnContainer rotate={rotate} setRotate={setRotate} />
-      <div className={styles.parent}>
-        <div
-          className={`${styles.parentInner} ${
-            rotate === 'back'
-              ? styles.parentInner__back
-              : styles.parentInner__front
-          }`}
-          ref={printRef}
-        >
-          <div className={styles.fr}>
-            <RecipeCardFront
-              title={formState.title}
-              imgUrl={formState.image}
-              qrUrl={formState.url}
-              ingredients={listItemState.ingredients}
-            />
-          </div>
-          <div className={styles.bk}>
-            <RecipeCardBack
-              // DEFAULT VALUES FOR TIME IF FORM IS LEFT EMPTY
-              // PARSEINT HTML FORM RETURNS A STRING
-              serves={formState.serves ? formState.serves : 4}
-              prepTimeHour={
-                formState.prepTimeHour ? parseInt(formState.prepTimeHour) : 0
-              }
-              prepTimeMin={
-                formState.prepTimeMin ? parseInt(formState.prepTimeMin) : 30
-              }
-              cookTimeHour={
-                formState.cookTimeHour ? parseInt(formState.cookTimeHour) : 1
-              }
-              cookTimeMin={
-                formState.cookTimeMin ? parseInt(formState.cookTimeMin) : 0
-              }
-              ovenTemp={formState.ovenTemp}
-              instructions={listItemState.instructions}
-              tips={listItemState.tips}
-              qrUrl={formState.url}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    [location.state.formState, location.state.listItemState]
   );
+
+  if (printCard === 'preview') {
+    return (
+      <div className={styles.recipecard_container}>
+        <PrintCardPreview
+          rotate={rotate}
+          setRotate={setRotate}
+          printCardStateHandler={printCardStateHandler}
+          recipeCardData={recipeCardData}
+        />
+      </div>
+    );
+  } else if (printCard === 'front') {
+    return (
+      <div className={styles.recipecard_container}>
+        <PrintCardFront
+          recipeCardData={recipeCardData}
+          printCardStateHandler={printCardStateHandler}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.recipecard_container}>
+        <PrintCardBack
+          recipeCardData={recipeCardData}
+          printCardStateHandler={printCardStateHandler}
+        />
+      </div>
+    );
+  }
 };
 
 export default RecipeCard;

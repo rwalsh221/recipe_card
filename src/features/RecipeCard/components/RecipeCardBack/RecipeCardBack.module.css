@@ -19,6 +19,7 @@
   grid-template-rows: max-content 1fr 1fr max-content;
 
   /* padding: 2rem; */
+  text-align: center;
 }
 
 .recipe_card_back h3 {
@@ -80,7 +81,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.recipe_card_back ul li {
 }

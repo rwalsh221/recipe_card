@@ -1,0 +1,32 @@
+.print_card_preview {
+  background-color: transparent;
+  width: calc(var(--recipe-card-width) + 10px); /* 10px = 2 * border width */
+  height: calc(var(--recipe-card-height) + 10px);
+  border: var(--border-500-c1);
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+.print_card_preview__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.print_card_preview__inner_back {
+  transform: rotateY(180deg);
+}
+
+.print_card_preview__fr,
+.print_card_preview__bk {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.print_card_preview__bk {
+  transform: rotateY(180deg);
+}

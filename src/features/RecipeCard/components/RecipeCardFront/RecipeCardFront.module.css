@@ -17,6 +17,7 @@
 
   display: grid;
   grid-template-rows: 1fr 1fr 2fr 1fr;
+  text-align: center;
 }
 
 .recipe_card_front h2,
