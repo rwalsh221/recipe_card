@@ -77,7 +77,7 @@ const Form = () => {
 
   const navigate = useNavigate();
 
-  console.log(formRef);
+  // console.log(formRef);
 
   // LOCAL STORAGE FUNCTIONS
 
